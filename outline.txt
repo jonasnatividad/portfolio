@@ -1,0 +1,180 @@
+portfolio/
+│
+├── README.md
+│
+├── platform_infrastructure/
+│   ├── README.md
+│   │
+│   ├── hosting/
+│   │   └── hetzner/
+│   │       ├── README.md
+│   │       ├── server_setup.md
+│   │       ├── networking_firewall.md
+│   │       ├── backups.md
+│   │       └── cost_management.md
+│   │
+│   ├── services/
+│   │   ├── lightdash/
+│   │   │   ├── README.md
+│   │   │   ├── docker_compose.yml
+│   │   │   ├── env_example.md
+│   │   │   ├── auth_setup.md
+│   │   │   └── upgrade_strategy.md
+│   │   │
+│   │   └── n8n/
+│   │       ├── README.md
+│   │       ├── docker_compose.yml
+│   │       ├── webhook_security.md
+│   │       ├── scraping_architecture.md
+│   │       └── scaling_notes.md
+│   │
+│   ├── observability/
+│   │   ├── logging.md
+│   │   ├── uptime_checks.md
+│   │   └── alerting.md
+│   │
+│   └── security/
+│       ├── ssl_tls.md
+│       ├── secrets_management.md
+│       └── access_controls.md
+│
+├── data_pipelines/
+│   ├── README.md
+│   │
+│   ├── ingestion/
+│   │   ├── n8n_workflows/
+│   │   │   ├── README.md
+│   │   │   ├── api_scraping.json
+│   │   │   ├── html_scraping.json
+│   │   │   ├── pagination_patterns.json
+│   │   │   └── auth_handling.json
+│   │   │
+│   │   ├── python_ingestion/
+│   │   │   ├── api_to_gcs.py
+│   │   │   └── gcs_to_bigquery.py
+│   │   │
+│   │   └── ingestion_patterns.md
+│   │
+│   ├── transformations/
+│   │   ├── pandas_cleaning.py
+│   │   └── validation.py
+│   │
+│   └── scheduling_triggers/
+│       ├── cron_examples.md
+│       └── webhook_triggers.md
+│
+├── data_warehousing/
+│   ├── README.md
+│   │
+│   ├── bigquery/
+│   │   ├── README.md
+│   │   ├── table_design/
+│   │   │   ├── partitioning.sql
+│   │   │   ├── clustering.sql
+│   │   │   ├── event_time_vs_ingestion_time.md
+│   │   │   └── fact_dimension_grain.md
+│   │   │
+│   │   ├── performance_optimization/
+│   │   │   ├── bytes_scanned_reduction.sql
+│   │   │   ├── query_plan_analysis.md
+│   │   │   └── materialized_views.sql
+│   │   │
+│   │   ├── cost_controls/
+│   │   │   ├── cost_analysis.sql
+│   │   │   ├── dry_run_examples.md
+│   │   │   └── budget_alerts.md
+│   │   │
+│   │   ├── incremental_loading/
+│   │   │   ├── merge_patterns.sql
+│   │   │   ├── late_arriving_data.md
+│   │   │   └── backfill_strategies.md
+│   │   │
+│   │   ├── security_governance/
+│   │   │   ├── row_level_security.sql
+│   │   │   ├── column_level_security.sql
+│   │   │   └── service_accounts.md
+│   │   │
+│   │   └── operations/
+│   │       ├── retention_policies.md
+│   │       ├── dataset_lifecycle.md
+│   │       └── incident_postmortem_example.md
+│   │
+│   └── snowflake/
+│       ├── README.md
+│       ├── table_design/
+│       ├── performance_optimization/
+│       ├── cost_controls/
+│       ├── incremental_loading/
+│       ├── security_governance/
+│       └── operations/
+│
+├── analytics_engineering/
+│   ├── README.md
+│   │
+│   ├── dbt/
+│   │   ├── README.md
+│   │   ├── dbt_project.yml
+│   │   ├── models/
+│   │   │   ├── staging/
+│   │   │   ├── intermediate/
+│   │   │   └── marts/
+│   │   │
+│   │   ├── tests/
+│   │   ├── snapshots/
+│   │   └── macros/
+│   │
+│   └── sql_patterns/
+│       ├── window_functions.sql
+│       ├── deduplication.sql
+│       └── scd_type_2.sql
+│
+├── data_modeling/
+│   ├── README.md
+│   │
+│   ├── omni_semantic_models/
+│   │   ├── README.md
+│   │   ├── metrics.yml
+│   │   ├── dimensions.yml
+│   │   └── joins.yml
+│   │
+│   └── lookml_semantic_models/
+│       ├── README.md
+│       ├── model.lkml
+│       ├── views/
+│       └── explores/
+│
+├── business_intelligence/
+│   ├── README.md
+│   │
+│   ├── looker/
+│   │   ├── dashboards/
+│   │   └── explores/
+│   │
+│   ├── looker_studio/
+│   │   └── dashboards/
+│   │
+│   └── lightdash/
+│       ├── dashboards/
+│       └── metrics/
+│
+├── automation_tooling/
+│   ├── README.md
+│   │
+│   ├── monitoring/
+│   │   ├── data_freshness_checks.py
+│   │   └── alerting.py
+│   │
+│   ├── backfills/
+│   │   └── historical_reprocess.py
+│   │
+│   └── cost_controls/
+│       └── bigquery_cost_analysis.sql
+│
+└── architecture/
+    ├── README.md
+    ├── system_overview.md
+    └── diagrams/
+        ├── ingestion_flow.png
+        ├── warehouse_layer.png
+        ├── semantic_layer.png
+        └── end_to_end_platform.png
