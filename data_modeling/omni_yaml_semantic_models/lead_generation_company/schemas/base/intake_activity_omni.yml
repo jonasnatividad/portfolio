@@ -1,0 +1,357 @@
+# Reference this view as intake_activity_omni
+label: Intake Activity
+
+schema: base
+table_name: salesforce_enriched
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  salesforce_id:
+    hidden: true
+    primary_key: true
+
+  ##############################
+  # Key Metrics #
+  ##############################
+
+  activity_type:
+    description: Type of activity recorded.
+    group_label: Key Metrics
+
+  call_type:
+    sql: CASE WHEN agent_name = 'Five9 System Disposition' THEN 'Inbound' ELSE
+      call_type END
+    description: Type of call activity recorded.
+    group_label: Key Metrics
+
+  agent_disposition:
+    sql: call_disposition
+    group_label: Key Metrics
+
+  five9_agent_name:
+    sql: agent_name
+    group_label: Key Metrics
+
+  ##############################
+  # Pivots #
+  ##############################
+
+  five9_campaign:
+    label: Campaign
+    description: Five9 Campaign.
+    group_label: Pivots
+
+  affiliate:
+    sql: ${leads_omni.affiliate}
+    description: Affiliate.
+    group_label: Pivots
+
+  ##############################
+  # Booleans #
+  ##############################
+
+  is_call_flag:
+    sql: ${intake_activity_omni.activity_type} = 'Call'
+    label: Is Call
+    description: Is the activity recorded a call?
+    group_label: Booleans
+
+  is_connected_call_flag:
+    sql: |-
+      CASE WHEN ${intake_activity_omni.five9_agent_name} = 'Five9 System Disposition' AND ${intake_activity_omni.agent_disposition} IN ( 'Answering Machine', 'Abandon', 'No Answer', 'Caller Disconnected', 'Sent To Voicemail', 'Busy', 'Answer Machine Message Left', 'Dial Error', 'Fax', 'Do Not Call', 'Queue Callback Timeout' ) THEN FALSE
+      WHEN ${intake_activity_omni.activity_type} = 'Call' AND ${intake_activity_omni.call_type} = 'Inbound' AND ${intake_activity_omni.agent_disposition} NOT IN ('Abandon') THEN TRUE
+      WHEN ${intake_activity_omni.activity_type} = 'Call' AND ${intake_activity_omni.call_type} = 'Outbound' AND ${intake_activity_omni.agent_disposition} LIKE '%Jurist%' THEN FALSE
+      WHEN ${intake_activity_omni.activity_type} = 'Call' AND ${intake_activity_omni.call_type} = 'Outbound' AND ${intake_activity_omni.agent_disposition} NOT LIKE '%No Answer%' AND ${intake_activity_omni.agent_disposition} NOT LIKE '%TD%' THEN TRUE
+      ELSE FALSE END
+    label: Is Connected Call
+    description: Is the activity recorded a connected call?
+    group_label: Booleans
+
+  is_inbound_call_flag:
+    sql: ${intake_activity_omni.activity_type} = 'Call' AND
+      ${intake_activity_omni.call_type} = 'Inbound'
+    label: Is Inbound Call
+    description: Is the activity recorded an inbound call?
+    group_label: Booleans
+
+  is_outbound_dial_flag:
+    sql: ${intake_activity_omni.activity_type} = 'Call' AND
+      ${intake_activity_omni.call_type} = 'Outbound' AND
+      ${intake_activity_omni.agent_disposition} IS NOT NULL
+    label: Is Outbound Dial
+    description: Is the activity recorded an outbound dial?
+    group_label: Booleans
+
+  is_disqualified_flag:
+    sql: ${intake_activity_omni.activity_type} = 'Call' AND
+      (${intake_activity_omni.agent_disposition} LIKE '%DQ%' OR
+      ${intake_activity_omni.agent_disposition} LIKE '%TD -%')
+    label: Is Disqualified
+    description: Is the activity recorded a disqualification?
+    group_label: Booleans
+
+  is_retainer_signed_flag:
+    sql: ${intake_activity_omni.activity_type} = 'Sign Event'
+    label: Is Retainer Signed
+    description: Is the activity recorded a retainer signing event?
+    group_label: Booleans
+
+  is_retainer_sent_flag:
+    sql: ${intake_activity_omni.activity_type} = 'Call' AND
+      ${intake_activity_omni.agent_disposition} LIKE '%Retainer Sent%'
+    label: Is Retainer
+    description: Is the activity recorded a retainer sent?
+    group_label: Booleans
+
+  is_other_disposition_flag:
+    sql: |-
+      CASE WHEN (${intake_activity_omni.activity_type} = 'Call' AND ${intake_activity_omni.call_type} = 'Outbound' AND ${intake_activity_omni.agent_disposition} LIKE '%Jurist%' AND ${intake_activity_omni.agent_disposition} NOT IN ('Jurist - Transfer to TE' , 'Jurist - DQ')) THEN FALSE
+      WHEN (${intake_activity_omni.activity_type} = 'Call' AND ${intake_activity_omni.agent_disposition} NOT LIKE '%DQ%' AND ${intake_activity_omni.agent_disposition} not like '%Retainer%' AND ${intake_activity_omni.agent_disposition} NOT LIKE '%TD -%' AND ${intake_activity_omni.agent_disposition} NOT LIKE '%No Answer%') THEN TRUE
+      ELSE FALSE END
+    label: Is Other Disposition
+    description: Is the activity recorded classified as a disposition of 'Other'?
+    group_label: Booleans
+
+  is_five9_system_flag:
+    sql: |-
+      CASE WHEN ${intake_activity_omni.five9_agent_name} = 'Five9 System Disposition' AND ${intake_activity_omni.agent_disposition} IN ('Answering Machine', 'Abandon', 'No Answer', 'Caller Disconnected', 'Sent To Voicemail', 'Busy', 'Answer Machine Message Left', 'Dial Error', 'Fax', 'Do Not Call', 'Queue Callback Timeout') THEN TRUE
+      ELSE FALSE END
+    label: Is Five9 System
+    description: Is the activity recorded from the Five9 system?
+    group_label: Booleans
+
+  is_answered_other_disposition_flag:
+    sql: ${intake_activity_omni.is_other_disposition_flag} IS TRUE AND
+      ${intake_activity_omni.is_five9_system_flag} IS FALSE
+    label: Is Answered Other
+    description: Is the activity recorded classified as a disposition of 'Answered Other'?
+    group_label: Booleans
+
+  is_no_answer_disposition_flag:
+    sql: ${intake_activity_omni.is_call_flag} IS TRUE AND
+      ${intake_activity_omni.call_type} = 'Outbound' AND
+      ${intake_activity_omni.agent_disposition} IN ( 'No Answer - No Result',
+      'No Answer - Message Already Left', 'Jurist - Do Not Contact', 'Jurist -
+      Invalid Phone', 'Jurist - Voicemail', 'Jurist - Expired', 'Jurist -
+      Unreachable', 'Jurist - Rescheduled', 'Jurist - Disconnected', 'Jurist -
+      Inactive Phone' )
+    label: Is Answered Other
+    description: Is the activity recorded classified as a disposition of 'Answered Other'?
+    group_label: Booleans
+
+  is_abandoned_disposition_flag:
+    sql: ${intake_activity_omni.activity_type} = 'Call' AND
+      ${intake_activity_omni.call_type} = 'Inbound' AND
+      ${intake_activity_omni.agent_disposition} = 'Abandon'
+    label: Is Abandoned
+    description: Is the activity recorded classified as a disposition of 'Abandoned?'
+    group_label: Booleans
+
+  is_system_dial_flag:
+    sql: ${intake_activity_omni.is_call_flag} IS TRUE AND
+      ${intake_activity_omni.call_type} = 'Outbound' AND
+      ${intake_activity_omni.is_five9_system_flag} IS TRUE
+    label: Is System Dial
+    description: Is the activity recorded classified as a disposition of 'System Dial?'
+    group_label: Booleans
+
+  ##############################
+  # Dates #
+  ##############################
+
+  created_at:
+    label: Activity Created At
+    description: Date of creation of the activity record.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  ##############################
+  # Durations #
+  ##############################
+
+  call_duration_in_seconds:
+    label: Call Duration in Seconds
+    description: Duration of the call in seconds.
+    group_label: Durations
+
+  call_duration_in_minutes:
+    sql: ${intake_activity_omni.call_duration_in_seconds} / 60
+    label: Call Duration in Minutes
+    description: Duration of the call in minutes.
+    group_label: Durations
+
+measures:
+  ##############################
+  # Total Counts #
+  ##############################
+
+  all_calls_count:
+    sql: ${intake_activity_omni.is_call_flag}
+    label: All Calls
+    group_label: Total Counts
+    description: Count of activities where is_call_flag is true.
+    aggregate_type: count
+    filters:
+      is_call_flag:
+        is: true
+
+  connected_calls_count:
+    sql: ${intake_activity_omni.is_connected_call_flag}
+    label: Connected Calls
+    group_label: Total Counts
+    description: Count of activities where is_connected_call_flag is true.
+    aggregate_type: count
+    filters:
+      is_connected_call_flag:
+        is: true
+
+  inbound_calls_count:
+    sql: ${intake_activity_omni.is_inbound_call_flag}
+    label: Inbound Calls
+    group_label: Total Counts
+    description: Count of activities where is_inbound_call_flag is true.
+    aggregate_type: count
+    filters:
+      is_inbound_call_flag:
+        is: true
+
+  outbound_dials_count:
+    sql: ${intake_activity_omni.is_outbound_dial_flag}
+    label: Outbound Dials
+    group_label: Total Counts
+    description: Count of activities where is_outbound_dial_flag is true.
+    aggregate_type: count
+    filters:
+      is_outbound_dial_flag:
+        is: true
+
+  disqualified_count:
+    sql: ${intake_activity_omni.is_disqualified_flag}
+    label: DQs
+    group_label: Total Counts
+    description: Count of activities where is_disqualified_flag is true.
+    aggregate_type: count
+    filters:
+      is_disqualified_flag:
+        is: true
+
+  retainers_signed_count:
+    sql: ${intake_activity_omni.is_retainer_signed_flag}
+    label: Retainers Signed
+    group_label: Total Counts
+    description: Count of activities where is_retainer_signed_flag is true.
+    aggregate_type: count
+    filters:
+      is_retainer_signed_flag:
+        is: true
+
+  retainers_sent_count:
+    sql: ${intake_activity_omni.is_retainer_sent_flag}
+    label: Retainers Sent
+    group_label: Total Counts
+    description: Count of activities where is_retainer_sent_flag is true.
+    aggregate_type: count
+    filters:
+      is_retainer_sent_flag:
+        is: true
+
+  answered_other_count:
+    sql: ${intake_activity_omni.is_answered_other_disposition_flag}
+    label: Answered Other
+    group_label: Total Counts
+    description: Count of activities where is_answered_other_disposition_flag is true.
+    aggregate_type: count
+    filters:
+      is_answered_other_disposition_flag:
+        is: true
+
+  no_answer_count:
+    sql: ${intake_activity_omni.is_no_answer_disposition_flag}
+    label: No Answer
+    group_label: Total Counts
+    description: Count of activities where is_no_answer_disposition_flag is true.
+    aggregate_type: count
+    filters:
+      is_no_answer_disposition_flag:
+        is: true
+
+  abandoned_count:
+    sql: ${intake_activity_omni.is_abandoned_disposition_flag}
+    label: Inbound Calls Abandoned
+    group_label: Total Counts
+    description: Count of activities where is_abandoned_disposition_flag is true.
+    aggregate_type: count
+    filters:
+      is_abandoned_disposition_flag:
+        is: true
+
+  system_dials_count:
+    sql: ${intake_activity_omni.is_system_dial_flag}
+    label: System Dials
+    group_label: Total Counts
+    description: Count of activities where is_system_dial_flag is true.
+    aggregate_type: count
+    filters:
+      is_system_dial_flag:
+        is: true
+
+  all_activity_count:
+    label: All Activity
+    group_label: Total Counts
+    aggregate_type: count
+
+  ##############################
+  # Averages #
+  ##############################
+
+  no_answer_seconds_average:
+    sql: ${intake_activity_omni.call_duration_in_seconds}
+    label: AVG No Answer (Seconds)
+    group_label: Averages
+    aggregate_type: average
+    filters:
+      is_no_answer_disposition_flag:
+        is: true
+
+  disqualified_minutes_average:
+    sql: ${intake_activity_omni.call_duration_in_minutes}
+    label: AVG DQs (Minutes)
+    group_label: Averages
+    aggregate_type: average
+    filters:
+      is_disqualified_flag:
+        is: true
+
+  ##############################
+  # Derived Metrics #
+  ##############################
+
+  connect_rate:
+    sql: ${intake_activity_omni.connected_calls_count} /
+      NULLIF(${intake_activity_omni.all_calls_count},0)
+    label: Connect Rate
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Connected Calls) / (All Calls)
+
+  conversion_rate:
+    sql: ${intake_activity_omni.retainers_signed_count} /
+      NULLIF(${intake_activity_omni.connected_calls_count},0)
+    label: Conversion Rate
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Retainers Signed) / (Connected Calls)

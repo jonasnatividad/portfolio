@@ -1,0 +1,104 @@
+- join_from_view: detached_date_omni
+  join_to_view: analytics__affiliates
+  id: detached_date_omni_affiliates
+  join_type: always_left
+  on_sql: ${detached_date_omni.affiliate_id} = ${analytics__affiliates.affiliate_id}
+  relationship_type: one_to_one
+
+- join_from_view: detached_date_omni
+  join_to_view: analytics__campaigns
+  id: detached_date_omno_campaigns
+  join_type: always_left
+  on_sql: ${detached_date_omni.campaign_id} = ${analytics__campaigns.campaign_id}
+  relationship_type: one_to_one
+
+- join_from_view: detached_date_omni
+  join_to_view: analytics__contract
+  id: detached_date_omni_contract
+  join_type: always_left
+  on_sql: ${detached_date_omni.contract_id} = ${analytics__contract.contract_id}
+  relationship_type: one_to_one
+
+- join_from_view: intake_omni
+  join_to_view: intake_activity_omni
+  join_type: always_left
+  on_sql: ${intake_omni.salesforce_id} = ${intake_activity_omni.salesforce_id}
+  relationship_type: one_to_many
+
+- join_from_view: intake_omni
+  join_to_view: leads_omni
+  join_type: always_left
+  on_sql: ${intake_omni.lead_client_id} = ${leads_omni.lead_client_id}
+  relationship_type: one_to_one
+
+- join_from_view: leads_omni
+  join_to_view: analytics__affiliates
+  id: leads_omni_affiliates
+  join_type: always_left
+  on_sql: ${leads_omni.affiliate_id} = ${analytics__affiliates.affiliate_id}
+  relationship_type: many_to_one
+
+- join_from_view: leads_omni
+  join_to_view: analytics__campaigns
+  id: leads_omni_campaigns
+  join_type: always_left
+  on_sql: ${leads_omni.campaign_id} = ${analytics__campaigns.campaign_id}
+  relationship_type: many_to_one
+
+- join_from_view: leads_omni
+  join_to_view: analytics__contract
+  id: leads_omni_contract
+  join_type: always_left
+  on_sql: ${leads_omni.contract_id} = ${analytics__contract.contract_id}
+  relationship_type: many_to_one
+
+- join_from_view: leads_omni
+  join_to_view: base__gcp_mysql_tf_insights
+  id: leads_omni_gcp_mysql_tf_insights
+  join_type: always_left
+  on_sql: ${leads_omni.lead_id} = ${base__gcp_mysql_tf_insights.lead_id}
+  relationship_type: many_to_one
+
+- join_from_view: leads_omni
+  join_to_view: base__smart_reviews
+  id: leads_omni_smart_reviews
+  join_type: always_left
+  on_sql: ${leads_omni.lead_client_id} = ${base__smart_reviews.lead_client_id}
+  relationship_type: one_to_one
+
+- join_from_view: leads_omni
+  join_to_view: base__te_retool_lead_status_update
+  id: leads_omni_te_retool_lead_status_update
+  join_type: always_left
+  on_sql: ${leads_omni.lead_client_id} =
+    ${base__te_retool_lead_status_update.previous_lead_client_id}
+  relationship_type: one_to_one
+
+- join_from_view: leads_snapshot_omni
+  join_to_view: analytics__contract
+  id: leads_snapshot_omni_contract
+  join_type: always_left
+  on_sql: ${leads_snapshot_omni.contract_id} = ${analytics__contract.contract_id}
+  relationship_type: one_to_one
+
+- join_from_view: analytics__contract
+  join_to_view: analytics__deals
+  id: contract_deals
+  join_type: always_left
+  on_sql: ${analytics__contract.deal_id} = ${analytics__deals.deal_id}
+  relationship_type: one_to_one
+
+- join_from_view: analytics__deals
+  join_to_view: reporting_views__smart_reviews_deals_eligible
+  id: deals_smart_reviews_deals_eligible
+  join_type: always_left
+  on_sql: ${analytics__deals.deal_id} =
+    ${reporting_views__smart_reviews_deals_eligible.deal_id}
+  relationship_type: one_to_one
+
+- join_from_view: base__gcp_mysql_tf_insights
+  join_to_view: analytics__lead
+  id: gcp_mysql_tf_insights_lead
+  join_type: always_left
+  on_sql: ${base__gcp_mysql_tf_insights.lead_id} = ${analytics__lead.lead_id}
+  relationship_type: one_to_one

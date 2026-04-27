@@ -1,0 +1,15 @@
+base_view: detached_date_omni
+label: Detached Date
+description: Reporting topic that calculates key performance metrics using
+  specific date types (such as delivered date, lead date, return started date,
+  signed date, or sold date) and presents them in a unified, date-based format.
+  This allows metrics to be analyzed consistently across different business
+  timelines, independent of their original event dates.
+
+fields: [ detached_date_omni.* ]
+
+joins:
+  analytics__affiliates: {}
+  analytics__contract:
+    analytics__deals: {}
+  analytics__campaigns: {}

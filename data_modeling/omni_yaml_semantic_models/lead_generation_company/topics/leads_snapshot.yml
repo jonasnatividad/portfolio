@@ -1,0 +1,11 @@
+base_view: leads_snapshot_omni
+label: Leads Snapshot
+description: Point-in-time snapshot of Leads data designed for historical trend
+  analysis and high-level performance monitoring. Includes standardized KPIs
+  across revenue, delivery, signing, returns, and cost metrics to support
+  operational and executive reporting.
+
+fields: [ leads_snapshot_omni.* ]
+
+joins:
+  analytics__contract: {}

@@ -1,0 +1,19 @@
+base_view: leads_omni
+label: Leads
+description: Comprehensive reporting topic that includes all core key
+  performance metrics, along with additional department-specific and detailed
+  metrics for deeper analysis. This topic uses current, standardized business
+  terminology.
+
+fields: [ leads_omni.* ]
+
+joins:
+  analytics__affiliates: {}
+  analytics__campaigns: {}
+  analytics__contract:
+    analytics__deals:
+      reporting_views__smart_reviews_deals_eligible: {}
+  base__gcp_mysql_tf_insights:
+    analytics__lead: {}
+  base__smart_reviews: {}
+  base__te_retool_lead_status_update: {}

@@ -1,0 +1,800 @@
+# Reference this view as detached_date_omni
+schema: reporting_views
+table_name: detatched_date_refactored
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  lead_id:
+    format: ID
+    description: Unique identifier for record.
+    group_label: Key Metrics
+    primary_key: true
+
+  lead_client_id:
+    format: ID
+    description: Unique sub-identifier for record.
+    group_label: Key Metrics
+
+  campaign_id:
+    format: ID
+    description: Campaign ID.
+    hidden: true
+
+  affiliate_id:
+    sql: ${analytics__campaigns.affiliate_id}
+    format: ID
+    description: Affiliate ID.
+    hidden: true
+
+  contract_id:
+    format: ID
+    description: Contract ID.
+    hidden: true
+
+  client_id:
+    sql: ${analytics__contract.client_id}
+    format: ID
+    description: Client ID.
+    hidden: true
+
+  ##############################
+  # Key Metrics #
+  ##############################
+
+  status:
+    description: Status.
+    group_label: Key Metrics
+
+  client_status:
+    description: Client status.
+    group_label: Key Metrics
+
+  turn_down_reason:
+    description: Turn down reason.
+    group_label: Key Metrics
+
+  post_response:
+    description: Post response.
+    group_label: Key Metrics
+
+  post_category:
+    description: Post category.
+    group_label: Key Metrics
+
+  post_subcategory:
+    description: Post sub-category
+    group_label: Key Metrics
+
+  ##############################
+  # Key Filters #
+  ##############################
+
+  account_manager:
+    sql: ${analytics__affiliates.account_manager}
+    group_label: Key Filters
+
+  ##############################
+  # Pivots #
+  ##############################
+
+  lawsuit:
+    description: Lawsuit.
+    group_label: Pivots
+
+  campaign:
+    sql: ${analytics__campaigns.campaign}
+    description: Campaign.
+    group_label: Pivots
+
+  affiliate:
+    sql: ${analytics__campaigns.affiliate}
+    description: Affiliate.
+    group_label: Pivots
+
+  contract:
+    sql: ${analytics__contract.contract}
+    description: Contract.
+    group_label: Pivots
+
+  client:
+    sql: ${analytics__contract.client}
+    description: Client.
+    group_label: Pivots
+
+  intake_center:
+    sql: ${analytics__contract.call_center}
+    description: Intake Center.
+    group_label: Pivots
+
+  ##############################
+  # Booleans #
+  ##############################
+
+  is_return_initiated:
+    label: Is Return Initiated
+    format: number
+    description: Is the record return initiated?
+    group_label: Booleans
+    hidden: true
+
+  is_return_initiated_lead_flag:
+    sql: ${detached_date_omni.is_return_initiated} = 1
+    hidden: true
+
+  is_zero_day_call:
+    label: Is Zero Day Call
+    format: number
+    description: Is the record a zero day call?
+    group_label: Booleans
+    hidden: true
+
+  is_zero_day_call_flag:
+    sql: ${detached_date_omni.is_zero_day_call} = 1
+    hidden: true
+
+  is_zero_day_connected_call:
+    label: Is Zero Day Connected Call
+    format: number
+    description: Is the record a zero day connected call?
+    group_label: Booleans
+    hidden: true
+
+  is_zero_day_connected_call_flag:
+    sql: ${detached_date_omni.is_zero_day_connected_call} = 1
+    hidden: true
+
+  is_distributed_lead:
+    label: Is Distributed Lead
+    format: number
+    description: Is the record a distributed lead?
+    group_label: Booleans
+    hidden: true
+
+  is_distributed_lead_flag:
+    sql: ${detached_date_omni.is_distributed_lead} = 1
+    hidden: true
+
+  is_paid_lead:
+    label: Is Paid Lead
+    format: number
+    description: Is the record a paid lead?
+    group_label: Booleans
+    hidden: true
+
+  is_paid_lead_flag:
+    sql: ${detached_date_omni.is_paid_lead} = 1
+    hidden: true
+
+  is_pending_return:
+    label: Is Pending Return
+    format: number
+    description: Is the record pending return?
+    group_label: Booleans
+    hidden: true
+
+  is_pending_return_lead_flag:
+    sql: ${detached_date_omni.is_pending_return} = 1
+    hidden: true
+
+  is_pending_correction:
+    label: Is Pending Correction
+    format: number
+    description: Is the record pending correction?
+    group_label: Booleans
+    hidden: true
+
+  is_pending_correction_flag:
+    sql: ${detached_date_omni.is_pending_correction} = 1
+    hidden: true
+
+  is_returned:
+    label: Is Returned
+    format: number
+    description: Is the record returned?
+    group_label: Booleans
+    hidden: true
+
+  is_returned_lead_flag:
+    sql: ${detached_date_omni.is_returned} = 1
+    hidden: true
+
+  is_returned_and_is_not_pending_return:
+    sql: CASE WHEN ${detached_date_omni.is_returned} = 1 AND
+      ${detached_date_omni.is_pending_return} = 0 THEN 1 ELSE 0 END
+    label: Is Returned and Is Not Pending Return
+    group_label: Booleans
+    hidden: true
+
+  is_returned_and_is_not_pending_return_lead_flag:
+    sql: ${detached_date_omni.is_returned_and_is_not_pending_return} = 1
+    hidden: true
+
+  is_signed:
+    label: Is Signed
+    format: number
+    description: Is the record signed?
+    group_label: Booleans
+    hidden: true
+
+  is_signed_lead_flag:
+    sql: ${detached_date_omni.is_signed} = 1
+    hidden: true
+
+  is_delivered:
+    label: Is Delivered
+    format: number
+    description: Is the record delivered?
+    group_label: Booleans
+    hidden: true
+
+  is_delivered_lead_flag:
+    sql: ${detached_date_omni.is_delivered} = 1
+    hidden: true
+
+  is_signed_or_is_delivered:
+    sql: CASE WHEN ${detached_date_omni.is_signed} > 0 THEN 1 WHEN
+      ${detached_date_omni.is_delivered} > 0 THEN 1 ELSE 0 END
+    group_label: Booleans
+    hidden: true
+
+  is_signed_or_is_delivered_lead_flag:
+    sql: ${detached_date_omni.is_signed_or_is_delivered} = 1
+    hidden: true
+
+  is_pending:
+    label: Is Pending
+    format: number
+    description: Is the record pending?
+    group_label: Booleans
+    hidden: true
+
+  is_pending_flag:
+    sql: ${detached_date_omni.is_pending} = 1
+    hidden: true
+
+  is_lead:
+    label: Is Lead
+    format: number
+    description: Is the record a lead?
+    group_label: Booleans
+    hidden: true
+
+  is_lead_flag:
+    sql: ${detached_date_omni.is_lead} = 1
+    hidden: true
+
+  is_accepted_lead:
+    label: Is Accepted Lead
+    format: number
+    description: Is the record an accepted lead?
+    group_label: Booleans
+    hidden: true
+
+  is_accepted_lead_flag:
+    sql: ${detached_date_omni.is_accepted_lead} = 1
+    hidden: true
+
+  is_connected_call:
+    label: Is Connected Call
+    format: number
+    description: Is the record a connected call?
+    group_label: Booleans
+    hidden: true
+
+  is_connected_call_flag:
+    sql: ${detached_date_omni.is_connected_call} = 1
+    hidden: true
+
+  is_signed_call:
+    label: Is Signed Call
+    format: number
+    description: Is the record a signed call?
+    group_label: Booleans
+    hidden: true
+
+  is_signed_call_flag:
+    sql: ${detached_date_omni.is_signed_call} = 1
+    hidden: true
+
+  is_aff_payable:
+    label: Is Aff Payable
+    format: number
+    description: Is the record affiliate payable?
+    group_label: Booleans
+    hidden: true
+
+  is_aff_payable_flag:
+    sql: ${detached_date_omni.is_aff_payable} = 1
+    hidden: true
+
+  is_cherry_picked:
+    label: Is Cherry Picked Lead
+    format: number
+    description: Is the record cherry picked?
+    group_label: Booleans
+    hidden: true
+
+  is_cherry_picked_lead_flag:
+    sql: ${detached_date_omni.is_cherry_picked} = 1
+    hidden: true
+
+  ##############################
+  # Record-Level Counts #
+  ##############################
+
+  all_leads:
+    label: All Leads
+    description: Count on all leads.
+    group_label: Record-Level Counts
+
+  zero_day_signed_count:
+    label: Zero Day Signs
+    description: Count on zero day signed leads.
+    group_label: Record-Level Counts
+
+  ##############################
+  # Record-Level Calls #
+  ##############################
+
+  all_calls:
+    label: All Calls
+    description: Count on all calls.
+    group_label: Record-Level Calls
+
+  zero_day_call_count:
+    label: Zero Day Calls
+    description: Count on zero day calls.
+    group_label: Record-Level Calls
+
+  zero_day_connected_call_count:
+    label: Zero Day Connected Calls
+    description: Count on zero day calls that connected.
+    group_label: Record-Level Calls
+
+  ##############################
+  # Record-Level Costs #
+  ##############################
+
+  intake_cost:
+    label: Intake Cost
+    format: usdcurrency
+    description: Total spend on intake related expenses.
+    group_label: Record-Level Costs
+
+  total_cost_calc:
+    label: Total Cost
+    format: usdcurrency
+    description: Total spend on all expenses.
+    group_label: Record-Level Costs
+
+  normal_marketing_cost:
+    label: Normal Marketing Cost
+    format: usdcurrency
+    description: Total spend on normal marketing related expenses.
+    group_label: Record-Level Costs
+
+  ppr_marketing_cost:
+    label: PPR Marketing Cost
+    format: usdcurrency
+    description: Total spend on normal ppr related expenses.
+    group_label: Record-Level Costs
+
+  total_marketing_cost:
+    label: Total Marketing Cost
+    format: usdcurrency
+    description: Total spend on marketing related expenses.
+    group_label: Record-Level Costs
+
+  ##############################
+  # Record-Level Revenue #
+  ##############################
+
+  signed_revenue:
+    label: Signed Revenue
+    format: usdcurrency
+    description: Total revenue generated that has been signed.
+    group_label: Record-Level Revenue
+
+  total_returned_revenue:
+    label: Total Returned Revenue
+    format: usdcurrency
+    description: Total revenue generated that has been returned.
+    group_label: Record-Level Revenue
+
+  total_revenue_calc:
+    label: Total Revenue
+    format: usdcurrency
+    description: Total revenue generated.
+    group_label: Record-Level Revenue
+
+  ##############################
+  # Record-Level Profit #
+  ##############################
+
+  gross_profit_calc:
+    label: Gross Profit
+    format: usdcurrency
+    description: Gross profit generated.
+    group_label: Record-Level Profit
+
+  ##############################
+  # Detached Date #
+  ##############################
+
+  detached_date:
+    label: Date
+    format: "%Y-%m-%d"
+
+measures:
+  ##############################
+  # Total Counts # 
+  ##############################
+
+  distributed_leads_count:
+    sql: ${detached_date_omni.is_distributed_lead_flag}
+    label: Distributed Leads
+    group_label: Total Counts
+    description: Count of records where is_distributed_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_distributed_lead_flag:
+        is: true
+
+  paid_leads_count:
+    sql: ${detached_date_omni.is_paid_lead_flag}
+    label: Paid Leads
+    group_label: Total Counts
+    description: Count of records where is_paid_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_paid_lead_flag:
+        is: true
+
+  accepted_leads_count:
+    sql: ${detached_date_omni.is_accepted_lead_flag}
+    label: Accepted Leads
+    group_label: Total Counts
+    description: Count of records where is_accepted_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_accepted_lead_flag:
+        is: true
+
+  cherry_picked_leads_count:
+    sql: ${detached_date_omni.is_cherry_picked_lead_flag}
+    label: Cherry Picked Leads
+    group_label: Total Counts
+    description: Count of records where is_cherry_picked_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_cherry_picked_lead_flag:
+        is: true
+
+  returned_leads_count:
+    sql: ${detached_date_omni.is_returned_lead_flag}
+    label: Returned Leads
+    group_label: Total Counts
+    description: Count of records where is_returned_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_returned_lead_flag:
+        is: true
+
+  signed_leads_count:
+    sql: ${detached_date_omni.is_signed_lead_flag}
+    label: Signed Leads
+    group_label: Total Counts
+    description: Count of records where is_signed_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_signed_lead_flag:
+        is: true
+
+  returned_and_not_pending_return_leads_count:
+    sql: ${detached_date_omni.is_returned_and_is_not_pending_return_lead_flag}
+    label: Returned Leads
+    group_label: Total Counts
+    description: Count of records where is_returned_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_returned_and_is_not_pending_return_lead_flag:
+        is: true
+
+  delivered_leads_count:
+    sql: ${detached_date_omni.is_delivered_lead_flag}
+    label: Delivered Leads
+    group_label: Total Counts
+    description: Count of records where is_delivered_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_delivered_lead_flag:
+        is: true
+
+  signed_or_delivered_leads_count:
+    sql: ${detached_date_omni.is_signed_or_is_delivered_lead_flag}
+    label: Signed or Delivered Leads
+    group_label: Total Counts
+    description: Count of records where is_signed_or_is_delivered_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_signed_or_is_delivered_lead_flag:
+        is: true
+
+  pending_correction_leads_count:
+    sql: ${detached_date_omni.is_pending_correction_flag}
+    label: Pending Correction Leads
+    group_label: Total Counts
+    description: Count of records where is_pending_correction_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_pending_correction_flag:
+        is: true
+
+  pending_return_leads_count:
+    sql: ${detached_date_omni.is_pending_return_lead_flag}
+    label: Pending Return Leads
+    group_label: Total Counts
+    description: Count of records where is_pending_return_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_pending_return_lead_flag:
+        is: true
+
+  return_initiated_leads_count:
+    sql: ${detached_date_omni.is_return_initiated_lead_flag}
+    label: Return Initiated Leads
+    group_label: Total Counts
+    description: Count of records where is_return_initiated_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_return_initiated_lead_flag:
+        is: true
+
+  ##############################
+  # Total Sums #
+  ##############################
+
+  total_all_leads:
+    sql: ${detached_date_omni.all_leads}
+    label: All Leads
+    group_label: Total Sums
+    description: Sum of total count of all leads.
+    aggregate_type: sum
+    filters:
+      all_leads:
+        is: 1
+
+  ##############################
+  # Total Calls #
+  ##############################
+
+  all_calls_sum:
+    sql: ${detached_date_omni.all_calls}
+    label: All Calls
+    group_label: Total Calls
+    description: Sum of total count of all calls.
+    aggregate_type: sum
+
+  is_connected_call_sum:
+    sql: ${detached_date_omni.is_connected_call}
+    label: Connected Calls
+    group_label: Total Calls
+    description: Sum of total count of connected calls.
+    aggregate_type: sum
+
+  ##############################
+  # Zero Day Calls #
+  ##############################
+
+  total_zero_day_calls:
+    sql: ${detached_date_omni.zero_day_call_count}
+    label: Zero Day Calls
+    group_label: Zero Day Calls
+    description: Sum of total count of zero day calls.
+    aggregate_type: sum
+
+  total_zero_day_connected_calls:
+    sql: ${detached_date_omni.zero_day_connected_call_count}
+    label: Zero Day Connected Call
+    group_label: Zero Day Calls
+    description: Sum of total count of zero day connected calls.
+    aggregate_type: sum
+
+  total_zero_day_signed:
+    sql: ${detached_date_omni.zero_day_signed_count}
+    label: Zero Day Signed Leads
+    group_label: Zero Day Calls
+    description: Sum of total count of zero day signed leads.
+    aggregate_type: sum
+
+  ##############################
+  # Total Costs #
+  ##############################
+
+  normal_marketing_cost_sum:
+    sql: ${detached_date_omni.normal_marketing_cost}
+    label: Normal Marketing Costs
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total spend on normal marketing related expenses.
+    aggregate_type: sum
+
+  ppr_marketing_cost_sum:
+    sql: ${detached_date_omni.ppr_marketing_cost}
+    label: PPR Marketing Costs
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total spend on ppr marketing related expenses.
+    aggregate_type: sum
+
+  total_marketing_cost_sum:
+    sql: ${detached_date_omni.total_marketing_cost}
+    label: Total Marketing Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total spend on marketing related expenses.
+    aggregate_type: sum
+
+  intake_cost_sum:
+    sql: ${detached_date_omni.intake_cost}
+    label: Intake Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total spend on intake related expenses.
+    aggregate_type: sum
+
+  total_cost_calc_sum:
+    sql: ${detached_date_omni.total_cost_calc}
+    label: Total Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total spend on all expenses.
+    aggregate_type: sum
+
+  ##############################
+  # Total Profit #
+  ##############################
+
+  gross_profit_calc_sum:
+    sql: ${detached_date_omni.gross_profit_calc}
+    label: Gross Profit
+    group_label: Total Profit
+    format: usdcurrency
+    description: Sum of total profit generated.
+    aggregate_type: sum
+
+  ##############################
+  # Total Revenue #
+  ##############################
+
+  total_revenue_calc_sum:
+    sql: ${detached_date_omni.total_revenue_calc}
+    label: Total Revenue
+    group_label: Total Revenue
+    format: usdcurrency
+    description: Sum of total revenue generated.
+    aggregate_type: sum
+
+  total_returned_revenue_sum:
+    sql: ${detached_date_omni.total_returned_revenue}
+    label: Total Returned Revenue
+    group_label: Total Revenue
+    format: usdcurrency
+    description: Sum of total revenue attributed to leads with a final status of returned.
+    aggregate_type: sum
+
+  signed_revenue_sum:
+    sql: ${detached_date_omni.signed_revenue}
+    label: Signed Revenue
+    group_label: Total Revenue
+    format: usdcurrency
+    description: Sum of total revenue attributed to leads with a final status of signed.
+    aggregate_type: sum
+
+  ##############################
+  # Derived Metrics #
+  ##############################
+
+  total_marketing_cost_per_distributed_lead:
+    sql: ${detached_date_omni.total_marketing_cost_sum} /
+      NULLIF(${detached_date_omni.distributed_leads_count}, 0)
+    label: MKT Cost / DST Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Marketing Cost) / (Distributed Leads)
+
+  lead_accepted_rate:
+    sql: ${detached_date_omni.accepted_leads_count} /
+      NULLIF(${detached_date_omni.total_all_leads}, 0)
+    label: Lead Accepted Rate
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Accepted Leads) / (All Leads)
+
+  return_rate:
+    sql: ${returned_leads_count} / NULLIF(${returned_leads_count} +
+      ${signed_leads_count} + ${delivered_leads_count} +
+      ${pending_return_leads_count}, 0 )
+    label: Return Rate
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Returned Leads) / (Returned Leads + Signed Leads + Delivered leads
+      + Pending Return Leads)
+
+  signed_and_delivered_lead_conversion_rate:
+    sql: ${detached_date_omni.signed_or_delivered_leads_count} /
+      NULLIF(${detached_date_omni.distributed_leads_count},0)
+    label: CVR
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Signed Leads + Delivered Leads) / (Distributed Leads)
+
+  margin:
+    sql: (${detached_date_omni.total_revenue_calc_sum} -
+      ${detached_date_omni.total_cost_calc_sum}) /
+      NULLIF(${detached_date_omni.total_revenue_calc_sum}, 0)
+    label: Profit Margin
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Total Revenue - Total Cost) / (Total Revenue)
+
+  ##############################
+  # Derived Metrics - Calls #
+  ##############################
+
+  all_calls_connect_rate:
+    sql: ${detached_date_omni.is_connected_call_sum} /
+      NULLIF(${detached_date_omni.all_calls_sum}, 0)
+    label: All Calls Connected Rate
+    group_label: Derived Metrics - Calls
+    format: percent_2
+    description: (Connected Calls) / (All Calls)
+
+  ##############################
+  # Derived Metrics - Zero Day #
+  ##############################
+
+  zero_day_connected_calls_per_distributed_leads:
+    sql: ${detached_date_omni.total_zero_day_connected_calls} /
+      NULLIF(${detached_date_omni.distributed_leads_count}, 0)
+    label: Zero Day Connected Rate
+    group_label: Derived Metrics - Zero Day
+    format: percent_2
+    description: (Zero Day Connected Calls) / (Distributed Leads)
+
+  zero_day_signed_rate:
+    sql: ${detached_date_omni.total_zero_day_signed} /
+      NULLIF(${detached_date_omni.signed_or_delivered_leads_count}, 0)
+    label: Zero Day Signed Rate
+    group_label: Derived Metrics - Zero Day
+    format: percent_2
+    description: (Zero Day Signed Leads) / (Signed Leads + Delivered Leads)
+
+  zero_day_conversion_rate:
+    sql: ${detached_date_omni.total_zero_day_signed} /
+      NULLIF(${detached_date_omni.distributed_leads_count}, 0)
+    label: Zero Day CVR
+    group_label: Derived Metrics - Zero Day
+    format: percent_2
+    description: (Zero Day Connected Calls) / (Distributed Leads)
+
+default_drill_fields:
+  [
+    detached_date,
+    lead_id,
+    lead_client_id,
+    status,
+    client_status,
+    turn_down_reason,
+    post_response,
+    post_category,
+    post_subcategory,
+    normal_marketing_cost,
+    ppr_marketing_cost,
+    total_marketing_cost,
+    intake_cost,
+    total_cost_calc
+  ]

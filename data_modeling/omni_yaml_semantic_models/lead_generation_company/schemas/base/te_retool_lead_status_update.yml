@@ -1,0 +1,12 @@
+# Reference this view as base__te_retool_lead_status_update
+schema: base
+table_name: te_retool_lead_status_update
+
+dimensions:
+  previous_lead_client_id:
+    label: Lead Client ID
+
+  return_request_date:
+    sql: CAST(base__te_retool_lead_status_update.return_request_date AS TIMESTAMP)
+    label: Return Started
+    convert_tz: false

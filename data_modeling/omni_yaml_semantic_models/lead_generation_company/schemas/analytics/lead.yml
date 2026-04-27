@@ -1,0 +1,17 @@
+# Reference this view as analytics__lead
+description: Unified view of all leads combining web leads (form submissions)
+  and phone leads (calls). This is the primary lead table used for analysis.
+
+schema: analytics
+table_name: lead
+
+dimensions:
+  lead_id:
+    format: id
+    description: Unique identifier for the lead. Primary key for the lead table.
+      Combines web leads (form submissions) and phone leads (calls).
+    primary_key: true
+
+  cost:
+    label: Total Cost
+    format: usdcurrency

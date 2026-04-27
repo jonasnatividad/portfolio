@@ -1,0 +1,200 @@
+# Reference this view as leads_snapshot_omni
+schema: snapshots
+sql: |
+  SELECT
+   DATE_TRUNC(timestamp, hour) as timestamp
+   , contract_id
+   , avg(delivered) as delivered
+   , avg(signed) as signed
+   , avg(total_cost) as total_cost
+   , avg(total_revenue) as total_revenue
+   , avg(pending) as pending
+   , avg(lead) as leads
+   , avg(marketing_cost) as marketing_cost
+   , avg(intake_cost) as intake_cost
+   , avg(returned) as returned
+   FROM
+   `tortexports.snapshots.lead_flat_snapshot`
+   GROUP by 1, 2
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  contract_id:
+    format: ID
+    description: Unique contract identifier for record.
+    hidden: true
+
+  ##############################
+  # Pivots #
+  ##############################
+
+  contract:
+    sql: ${analytics__contract.contract}
+    description: Contract.
+    group_label: Pivots
+
+  client:
+    sql: ${analytics__contract.client}
+    description: Client.
+    group_label: Pivots
+
+  lawsuit:
+    sql: ${analytics__contract.lawsuit}
+    description: Lawsuit.
+    group_label: Pivots
+
+  ##############################
+  # Record-Level Average Leads #
+  ##############################
+
+  leads:
+    label: Leads
+    description: All leads.
+    group_label: Record-Level Average Leads
+
+  delivered:
+    label: Delivered Leads
+    description: Delivered leads.
+    group_label: Record-Level Average Leads
+
+  signed:
+    label: Signed Leads
+    description: Signed leads.
+    group_label: Record-Level Average Leads
+
+  pending:
+    label: Pending Leads
+    description: Pending leads.
+    group_label: Record-Level Average Leads
+
+  returned:
+    label: Returned Leads
+    description: Returned leads.
+    group_label: Record-Level Average Leads
+
+  ##############################
+  # Record-Level Average Costs #
+  ##############################
+
+  total_cost:
+    description: Average spend on all expenses.
+    group_label: Record-Level Average Costs
+
+  marketing_cost:
+    format: usdcurrency
+    description: Average spend on marketing related expenses.
+    group_label: Record-Level Average Costs
+
+  intake_cost:
+    format: usdcurrency
+    description: Average spend on intake related expenses.
+    group_label: Record-Level Average Costs
+
+  ##############################
+  # Dates #
+  ##############################
+
+  timestamp:
+    sql: CAST(timestamp AS TIMESTAMP)
+    label: Timestamp
+    description: Date of snapshot.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  ##############################
+  # Record-Level Average Revenue #
+  ##############################
+
+  total_revenue:
+    format: usdcurrency
+    description: Average revenue generated.
+    group_label: Record-Level Average Revenue
+
+measures:
+  ##############################
+  # Aggregated Average Leads #
+  ##############################
+
+  avg_leads:
+    sql: ${leads_snapshot_omni.leads}
+    label: Average Leads
+    group_label: Aggregated Average Leads
+    description: Aggregated Average of All Leads
+    aggregate_type: sum
+
+  avg_delivered:
+    sql: ${leads_snapshot_omni.delivered}
+    label: Average Delivered
+    group_label: Aggregated Average Leads
+    description: Aggregated Average of Delivered Leads
+    aggregate_type: sum
+
+  avg_signed:
+    sql: ${leads_snapshot_omni.signed}
+    label: Average Signed
+    group_label: Aggregated Average Leads
+    description: Aggregated Average of Signed Leads
+    aggregate_type: sum
+
+  avg_pending:
+    sql: ${leads_snapshot_omni.pending}
+    label: Average Pending
+    group_label: Aggregated Average Leads
+    description: Aggregated Average of Pending Leads
+    aggregate_type: sum
+
+  avg_returned:
+    sql: ${leads_snapshot_omni.returned}
+    label: Average Returned
+    group_label: Aggregated Average Leads
+    description: Aggregated Average of Returned Leads
+    aggregate_type: sum
+
+  ##############################
+  # Aggregated Average Costs #
+  ##############################
+
+  avg_total_cost:
+    sql: ${leads_snapshot_omni.total_cost}
+    group_label: Aggregated Average Costs
+    description: Aggregated average spend on all expenses.
+    aggregate_type: sum
+
+  avg_marketing_cost:
+    sql: ${leads_snapshot_omni.marketing_cost}
+    group_label: Aggregated Average Costs
+    format: usdcurrency
+    description: Aggregated average spend on marketing related expenses.
+    aggregate_type: sum
+
+  avg_intake_cost:
+    sql: ${leads_snapshot_omni.intake_cost}
+    group_label: Aggregated Average Costs
+    format: usdcurrency
+    description: Aggregated average spend on intake related expenses.
+    aggregate_type: sum
+
+  ##############################
+  # Aggregated Average Revenue #
+  ##############################
+
+  avg_total_revenue:
+    sql: ${leads_snapshot_omni.total_revenue}
+    group_label: Aggregated Average Revenue
+    format: usdcurrency
+    description: Aggregated average revenue generated.
+    aggregate_type: sum

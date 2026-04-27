@@ -1,0 +1,9 @@
+# Reference this view as reporting_views__smart_reviews_deals_eligible
+schema: reporting_views
+table_name: smart_reviews_deals_eligible
+
+dimensions:
+  is_smart_review_eligible: {}
+
+  deal_id:
+    format: ID

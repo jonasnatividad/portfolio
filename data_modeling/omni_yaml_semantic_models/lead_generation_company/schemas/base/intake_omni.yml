@@ -1,0 +1,95 @@
+# Reference this view as intake_omni
+schema: base
+table_name: stitch_salesforce
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  salesforce_id:
+    hidden: true
+    primary_key: true
+
+  lead_client_id:
+    sql: client_lead_id
+
+  ##############################
+  # Key Metrics #
+  ##############################
+
+  case_type:
+    label: Case Type
+    group_label: Key Metrics
+
+  ##############################
+  # Booleans #
+  ##############################
+
+  is_test:
+    hidden: true
+
+  is_sent_to_jurist:
+    sql: sent_to_jurist
+    hidden: true
+
+  is_not_overflow_contract:
+    sql: ${leads_omni.contract} NOT LIKE '%Overflow%'
+    hidden: true
+
+  is_hour_of_day_8_to_22:
+    sql: EXTRACT(HOUR FROM ${intake_omni.created_at}) BETWEEN 8 AND 22
+    hidden: true
+
+  is_called_in_first_ten_minutes_flag:
+    sql: seconds_to_first_call_from_available < 600
+    hidden: true
+
+  ##############################
+  # Dates #
+  ##############################
+
+  created_at:
+    label: Activity Created At
+    description: Date of creation of the activity record.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+measures:
+  ##############################
+  # Total Counts #
+  ##############################
+
+  called_in_first_ten_minutes_count:
+    sql: ${intake_omni.is_called_in_first_ten_minutes_flag}
+    group_label: Total Counts
+    aggregate_type: count
+    filters:
+      is_called_in_first_ten_minutes_flag:
+        is: true
+
+  count:
+    hidden: true
+    aggregate_type: count
+
+  ##############################
+  # Derived Metrics #
+  ##############################
+
+  percent_called_in_first_ten_mins:
+    sql: ${intake_omni.called_in_first_ten_minutes_count} /
+      NULLIF(${intake_omni.count}, 0)
+    label: "% called in first ten mins"
+    group_label: Derived Metrics
+    format: percent_2

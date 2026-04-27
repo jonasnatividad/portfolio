@@ -1,0 +1,387 @@
+# Reference this view as legacy_omni
+schema: analytics
+table_name: lead_flat
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  lead_id:
+    format: ID
+    description: Unique identifier for record.
+    group_label: IDs
+    primary_key: true
+
+  lead_client_id:
+    format: ID
+    description: Unique sub-identifier for record.
+    group_label: IDs
+
+  ##############################
+  # Key Metrics #
+  ##############################
+
+  status:
+    description: Status of the record grouped into limited categories.
+    group_label: Key Metrics
+
+  email_drop:
+    description: Indicator on email performance.
+    group_label: Key Metrics
+
+  ##############################
+  # Record-Level Costs #
+  ##############################
+
+  marketing_cost:
+    format: usdcurrency
+    description: Total spend on marketing related expenses.
+    group_label: Record-Level Costs
+
+  intake_cost:
+    format: usdcurrency
+    description: Total spend on intake related expenses.
+    group_label: Record-Level Costs
+
+  total_cost:
+    format: usdcurrency
+    description: Total spend on all expenses.
+    group_label: Record-Level Costs
+
+  ##############################
+  # Record-Level Revenue #
+  ##############################
+
+  total_revenue:
+    format: usdcurrency
+    description: Total revenue generated.
+    group_label: Record-Level Revenue
+
+  ##############################
+  # Pivots #
+  ##############################
+
+  affiliate:
+    description: Affiliate.
+    group_label: Pivots
+
+  campaign:
+    description: Campaign.
+    group_label: Pivots
+
+  client:
+    description: Client.
+    group_label: Pivots
+
+  contract:
+    description: Contract.
+    group_label: Pivots
+
+  lawsuit:
+    description: Lawsuit.
+    group_label: Pivots
+
+  ##############################
+  # Sub-Affiliates #
+  ##############################
+
+  s1:
+    description: Sub-Affiliate 1
+    group_label: Sub-Affiliates
+
+  s2:
+    description: Sub-Affiliate 2
+    group_label: Sub-Affiliates
+
+  s3:
+    description: Sub-Affiliate 3
+    group_label: Sub-Affiliates
+
+  ##############################
+  # Booleans #
+  ##############################
+
+  is_lead:
+    description: Is the record a lead?
+    hidden: true
+
+  is_distributed_lead_flag:
+    sql: ${legacy_omni.is_lead} = 1
+    hidden: true
+
+  is_pending:
+    description: Is the record pending?
+    hidden: true
+
+  is_pending_lead_flag:
+    sql: ${legacy_omni.is_pending} = 1
+    hidden: true
+
+  is_delivered:
+    description: Is the record delivered?
+    hidden: true
+
+  is_delivered_lead_flag:
+    sql: ${legacy_omni.is_delivered} = 1
+    hidden: true
+
+  is_signed:
+    description: Is the record signed?
+    hidden: true
+
+  is_signed_lead_flag:
+    sql: ${legacy_omni.is_signed} = 1
+    hidden: true
+
+  is_paid_lead_flag:
+    sql: ${legacy_omni.is_lead} = 1 AND ${legacy_omni.marketing_cost} > 0
+    hidden: true
+
+  is_returned:
+    description: Is the record a lead?
+    hidden: true
+
+  is_returned_lead_flag:
+    sql: ${legacy_omni.is_returned} = 1
+    hidden: true
+
+  is_pending_return:
+    description: Is the record a pending return?
+    hidden: true
+
+  is_pending_return_lead_flag:
+    sql: ${legacy_omni.is_pending} = 1
+    hidden: true
+
+  is_gross_signed:
+    sql: CASE WHEN ${legacy_omni.is_signed} = 1 THEN 1 WHEN
+      ${legacy_omni.is_delivered} = 1 THEN 1 WHEN
+      ${legacy_omni.is_pending_return} = 1 THEN 1 WHEN
+      ${legacy_omni.is_returned} = 1 AND ${legacy_omni.is_pending_return} = 0
+      THEN 1 WHEN ${legacy_omni.status} IN ('Pending Correction', 'Failed TE
+      QA', 'JV') THEN 1 ELSE 0 END
+    description: Does the record have an is_returned = 1 (and not pending return),
+      or a status of Pending Correction, Failed TE QA, or JV, or is it pending
+      return, signed, or delivered?
+    hidden: true
+
+  is_gross_signed_lead_flag:
+    sql: ${legacy_omni.is_gross_signed} = 1
+    hidden: true
+
+  ##############################
+  # Dates #
+  ##############################
+
+  created_at:
+    description: Reference to creation timestamp of the row item in the local table.
+    group_label: Dates
+
+  sold_at:
+    description: When the lead was distributed.
+    group_label: Dates
+
+  signed_at:
+    description: Date when lead signed with intake center.
+    group_label: Dates
+
+  last_status_updated_at:
+    description: Last time the status was updated.
+    group_label: Dates
+
+  ##############################
+  # Dynamic Date #
+  ##############################
+
+  dynamic_date_selection:
+    sql: CASE WHEN {{# legacy_omni.date_type_selector.filter }}'Lead'{{/
+      legacy_omni.date_type_selector.filter }} THEN
+      ${legacy_omni.created_at[date]} WHEN {{#
+      legacy_omni.date_type_selector.filter }}'Sold'{{/
+      legacy_omni.date_type_selector.filter }} THEN ${legacy_omni.sold_at[date]}
+      WHEN {{# legacy_omni.date_type_selector.filter }}'Signed'{{/
+      legacy_omni.date_type_selector.filter }} THEN
+      ${legacy_omni.signed_at[date]} ELSE NULL END
+    label: Dynamic Date Selection
+    group_label: Dynamic Date
+    timeframes: [ date ]
+
+measures:
+  ##############################
+  # Total Counts #
+  ##############################
+
+  distributed_leads_count:
+    sql: ${legacy_omni.is_distributed_lead_flag}
+    label: Distributed Leads
+    group_label: Total Counts
+    description: Count of records where is_distributed_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_distributed_lead_flag:
+        is: true
+
+  pending_leads_count:
+    sql: ${legacy_omni.is_pending_lead_flag}
+    label: Pending Leads
+    group_label: Total Counts
+    description: Count of records where is_pending_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_pending_lead_flag:
+        is: true
+
+  delivered_leads_count:
+    sql: ${legacy_omni.is_delivered_lead_flag}
+    label: Delivered Leads
+    group_label: Total Counts
+    description: Count of records where is_delivered_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_delivered_lead_flag:
+        is: true
+
+  signed_leads_count:
+    sql: ${legacy_omni.is_signed_lead_flag}
+    label: Signed Leads
+    group_label: Total Counts
+    description: Count of records where is_signed_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_signed_lead_flag:
+        is: true
+
+  paid_leads_count:
+    sql: ${legacy_omni.is_paid_lead_flag}
+    label: Paid Leads
+    group_label: Total Counts
+    description: Count of records where is_paid_lead_flag is TRUE.
+    hidden: true
+    aggregate_type: count
+    filters:
+      is_paid_lead_flag:
+        is: true
+
+  gross_signed_leads_count:
+    sql: ${legacy_omni.is_gross_signed_lead_flag}
+    label: Gross Signed Leads
+    group_label: Total Counts
+    description: Count of records where is_gross_signed_lead_flag is TRUE.
+    hidden: true
+    aggregate_type: count
+    filters:
+      is_gross_signed_lead_flag:
+        is: true
+
+  ##############################
+  # Total Costs #
+  ##############################
+
+  total_marketing_cost:
+    sql: ${legacy_omni.marketing_cost}
+    label: Total Marketing Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total marketing related expenses.
+    aggregate_type: sum
+
+  total_intake_cost:
+    sql: ${legacy_omni.intake_cost}
+    label: Total Intake Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total intake related expenses.
+    aggregate_type: sum
+
+  total_total_cost:
+    sql: ${legacy_omni.total_cost}
+    label: Total Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total expenses.
+    aggregate_type: sum
+
+  ##############################
+  # Total Revenue #
+  ##############################
+
+  total_total_revenue:
+    sql: ${legacy_omni.total_revenue}
+    label: Total Revenue
+    group_label: Total Revenue
+    format: usdcurrency
+    description: Sum of total revenue generated.
+    aggregate_type: sum
+
+  ##############################
+  # Derived Metrics #
+  ##############################
+
+  total_total_profit:
+    sql: COALESCE(${legacy_omni.total_revenue}, 0) -
+      COALESCE(${legacy_omni.total_cost}, 0)
+    label: Total Profit
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Revenue - Total Cost)
+    aggregate_type: sum
+
+  total_profit_margin:
+    sql: (${legacy_omni.total_total_revenue} - ${legacy_omni.total_total_cost}) /
+      NULLIF(${legacy_omni.total_total_revenue}, 0)
+    group_label: Derived Metrics
+    format: percent
+    description: (Total Revenue - Total Cost) / (Total Revenue)
+
+  sum_delivered_and_signed_leads_count:
+    sql: CASE WHEN ${legacy_omni.is_delivered_lead_flag} = TRUE THEN 1 ELSE 0 END +
+      CASE WHEN ${legacy_omni.is_signed_lead_flag} = TRUE THEN 1 ELSE 0 END
+    label: DLVD + SGND Leads
+    group_label: Derived Metrics
+    description: (Delivered Leads + Signed Leads)
+    aggregate_type: sum
+
+  delivered_and_signed_lead_conversion_rate:
+    sql: ${legacy_omni.sum_delivered_and_signed_leads_count} /
+      NULLIF(${legacy_omni.distributed_leads_count}, 0)
+    label: CVR
+    group_label: Derived Metrics
+    format: percent
+    description: (Delivered Leads + Signed Leads) / (Distributed Leads)
+
+  total_marketing_cost_per_distributed_lead:
+    sql: ${legacy_omni.total_marketing_cost} /
+      NULLIF(${legacy_omni.distributed_leads_count}, 0)
+    label: MKT Cost / DST Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Marketing Cost) / (Distributed Leads)
+
+  total_marketing_cost_per_delivered_and_signed_lead:
+    sql: ${legacy_omni.total_marketing_cost} /
+      NULLIF(${legacy_omni.sum_delivered_and_signed_leads_count}, 0)
+    label: MKT Cost / DLVD + SGND Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Marketing Cost) / (Delivered Leads + Signed Leads)
+
+  total_cost_per_delivered_and_signed_lead:
+    sql: ${legacy_omni.total_total_cost} /
+      NULLIF(${legacy_omni.sum_delivered_and_signed_leads_count}, 0)
+    label: Total Cost / DLVD + SGND Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Cost) / (Delivered Leads + Signed Leads)
+
+filters:
+  ##############################
+  # Date Filters #
+  ##############################
+  date_type_selector:
+    type: string
+    group_label: Date Filters
+    suggestion_list:
+      - value: Lead
+      - value: Sold
+      - value: Signed

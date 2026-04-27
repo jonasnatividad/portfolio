@@ -1,0 +1,12 @@
+# Reference this view as base__gcp_mysql_tf_insights
+schema: base
+table_name: gcp_mysql_tf_insights
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  lead_id:
+    format: ID
+    primary_key: true

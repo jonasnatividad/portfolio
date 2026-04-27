@@ -1,0 +1,1162 @@
+# Reference this view as leads_omni
+schema: analytics
+table_name: lead_flat
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  lead_id:
+    format: ID
+    description: Unique identifier for record.
+    group_label: IDs
+    primary_key: true
+
+  lead_client_id:
+    format: ID
+    description: Unique sub-identifier for record.
+    group_label: IDs
+
+  affiliate_id:
+    format: ID
+    description: Unique affiliate identifier for record.
+    group_label: IDs
+    hidden: true
+
+  campaign_id:
+    format: ID
+    description: Unique campaign identifier for record.
+    group_label: IDs
+    hidden: true
+
+  contract_id:
+    format: ID
+    description: Unique contract identifier for record.
+    group_label: IDs
+    hidden: true
+
+  ##############################
+  # Key Metrics #
+  ##############################
+
+  status:
+    sql: CASE WHEN status = 'Return' THEN 'Returned' WHEN status = 'Delivered' THEN
+      'Billable' ELSE status END
+    description: Status of the record grouped into limited categories.
+    group_label: Key Metrics
+
+  client_status:
+    sql: CASE WHEN client_status = 'Return' then 'Returned' ELSE
+      INITCAP(client_status) END
+    description: Client status of the record grouped into limited categories.
+    group_label: Key Metrics
+
+  match_type:
+    description: Type of match from the lead to the intake center status.
+    group_label: Key Metrics
+
+  email_drop:
+    description: Indicator on email performance.
+    group_label: Key Metrics
+
+  tier:
+    sql: ${analytics__contract.tier}
+    group_label: Key Metrics
+
+  description:
+    description: Description submitted by the claimant.
+    group_label: Key Metrics
+
+  last_action:
+    sql: INITCAP(last_action)
+    description: Last action performed.
+    group_label: Key Metrics
+
+  last_action_notes:
+    description: Notes on last action performed.
+    group_label: Key Metrics
+
+  turn_down_reason:
+    label: Turned Down Reason
+    description: Reason for being turned down.
+    group_label: Key Metrics
+
+  ##############################
+  # Key Filters #
+  ##############################
+
+  lead_type:
+    description: Lead type.
+    group_label: Key Filters
+
+  lead_payment_type:
+    sql: ${analytics__campaigns.lead_payment_type}
+    description: Lead payment type.
+    group_label: Key Filters
+
+  campaign_type:
+    sql: ${analytics__campaigns.campaign_type}
+    description: Campaign type.
+    group_label: Key Filters
+
+  account_manager:
+    sql: ${analytics__affiliates.account_manager}
+    group_label: Key Filters
+
+  client_owner:
+    sql: ${analytics__deals.owner_name}
+    label: Client Owner
+    group_label: Key Filters
+
+  client_manager:
+    sql: ${analytics__deals.manager}
+    label: Client Manager
+    group_label: Key Filters
+
+  anura_response:
+    sql: CASE WHEN campaign LIKE '%H&P%' THEN '⚪ H&P' ELSE anura_response END
+    description: Response from Anura.
+    group_label: Key Filters
+
+  description_value:
+    sql: CASE WHEN ${leads_omni.description} IS NULL OR ${leads_omni.description} =
+      '' THEN 'Blank' ELSE 'Filled-In' END
+    description: Description submitted by the claimant (filled-in or blank).
+    group_label: Key Filters
+
+  ##############################
+  # Key Boolean Filters #
+  ##############################
+
+  is_paid_lead_flag:
+    sql: ${leads_omni.is_lead} = 1 AND ${leads_omni.marketing_cost} > 0
+    label: Is Paid Lead
+    description: Is the record a paid lead?
+    group_label: Key Boolean Filters
+
+  is_deal_active_flag:
+    sql: ${analytics__deals.is_deal_active_flag}
+    label: Is Deal Active
+    description: Is the deal active?
+    group_label: Key Boolean Filters
+
+  is_cherry_picked_lead_flag:
+    sql: ${leads_omni.cherry_picked} = 1
+    label: Is Cherry Picked Lead
+    description: Is the record a cherry picked lead?
+    group_label: Key Boolean Filters
+
+  is_smart_review_eligible_lead_flag:
+    sql: CASE WHEN
+      ${reporting_views__smart_reviews_deals_eligible.is_smart_review_eligible}
+      IS TRUE AND COALESCE(${leads_omni.is_test}, 0) = 0 AND
+      ${leads_omni.is_delivered} = 1 THEN TRUE ELSE FALSE END
+    label: Is Smart Review Eligible Lead
+    description: Is the record a smart review eligible lead?
+    group_label: Key Boolean Filters
+
+  has_smart_review_value__flag:
+    sql: ${base__smart_reviews.lead_client_id} IS NOT NULL
+    label: Has Smart Review Value
+    description: Does the record have a smart review value?
+    group_label: Key Boolean Filters
+
+  ##############################
+  # PII #
+  ##############################
+
+  first_name:
+    description: Retainer's first name.
+    group_label: PII
+
+  last_name:
+    description: Retainer's last name.
+    group_label: PII
+
+  phone:
+    description: Retainer's phone number.
+    group_label: PII
+
+  email:
+    description: Retainer's email address.
+    group_label: PII
+
+  ##############################
+  # Record-Level Costs #
+  ##############################
+
+  referral_fee_cost:
+    format: usdcurrency
+    description: Total spend on all referral fees.
+    group_label: Record-Level Costs
+
+  marketing_cost:
+    format: usdcurrency
+    description: Total spend on marketing related expenses.
+    group_label: Record-Level Costs
+
+  intake_cost:
+    format: usdcurrency
+    description: Total spend on intake related expenses.
+    group_label: Record-Level Costs
+
+  total_cost:
+    format: usdcurrency
+    description: Total spend on all expenses.
+    group_label: Record-Level Costs
+
+  cost_lead:
+    sql: ${analytics__lead.cost}
+    label: Cost - Lead
+    format: usdcurrency
+    description: Total spend on all expenses - from `lead` dataset.
+    group_label: Record-Level Costs
+
+  ##############################
+  # Record-Level Revenue #
+  ##############################
+
+  total_revenue:
+    format: usdcurrency
+    description: Total revenue generated.
+    group_label: Record-Level Revenue
+
+  ##############################
+  # Pivots #
+  ##############################
+
+  affiliate:
+    description: Affiliate.
+    group_label: Pivots
+
+  campaign:
+    description: Campaign.
+    group_label: Pivots
+
+  client:
+    description: Client.
+    group_label: Pivots
+
+  contract:
+    description: Contract.
+    group_label: Pivots
+
+  lawsuit:
+    description: Lawsuit.
+    group_label: Pivots
+
+  deal:
+    sql: ${analytics__deals.deal_title}
+    description: Deal.
+    group_label: Pivots
+
+  intake_center:
+    sql: ${analytics__contract.call_center}
+    description: Intake Center.
+    group_label: Pivots
+
+  ##############################
+  # Sub-Affiliates #
+  ##############################
+
+  s1:
+    label: Sub-Affiliate 1 (S1)
+    description: Sub-Affiliate 1 (S1)
+    group_label: Sub-Affiliates
+
+  s2:
+    label: Sub-Affiliate 2 (S2)
+    description: Sub-Affiliate 2 (S2)
+    group_label: Sub-Affiliates
+
+  s3:
+    label: Sub-Affiliate 3 (S3)
+    description: Sub-Affiliate 3 (S3)
+    group_label: Sub-Affiliates
+
+  s4:
+    label: Sub-Affiliate 4 (S4)
+    description: Sub-Affiliate 4 (S4)
+    group_label: Sub-Affiliates
+
+  s5:
+    label: Sub-Affiliate 5 (S5)
+    description: Sub-Affiliate 5 (S5)
+    group_label: Sub-Affiliates
+
+  ##############################
+  # Booleans #
+  ##############################
+
+  is_test:
+    description: Is the record a test lead?
+    hidden: true
+
+  is_lead:
+    description: Is the record a real lead?
+    hidden: true
+
+  is_distributed_lead_flag:
+    sql: ${leads_omni.is_lead} = 1
+    hidden: true
+
+  is_pending:
+    description: Is the record pending?
+    hidden: true
+
+  is_pending_lead_flag:
+    sql: ${leads_omni.is_pending} = 1
+    hidden: true
+
+  is_pending_correction_lead_flag:
+    sql: ${leads_omni.status} = 'Pending Correction'
+    hidden: true
+
+  is_failed_te_qa_lead_flag:
+    sql: ${leads_omni.status} = 'Failed TE QA'
+    hidden: true
+
+  is_jv_lead_flag:
+    sql: ${leads_omni.status} = 'JV'
+    hidden: true
+
+  is_delivered:
+    description: Is the record delivered?
+    hidden: true
+
+  is_delivered_lead_flag:
+    sql: ${leads_omni.is_delivered} = 1
+    hidden: true
+
+  is_signed:
+    description: Is the record signed?
+    hidden: true
+
+  is_signed_lead_flag:
+    sql: ${leads_omni.is_signed} = 1
+    hidden: true
+
+  is_signed_in_qa_lead_flag:
+    sql: ${leads_omni.is_signed} = 1 AND ${leads_omni.status} <> 'Pending
+      Correction'
+    hidden: true
+
+  is_returned:
+    description: Is the record a lead?
+    hidden: true
+
+  is_returned_lead_flag:
+    sql: ${leads_omni.is_returned} = 1
+    hidden: true
+
+  is_accepted_return_lead_flag:
+    sql: ${leads_omni.is_returned} = 1 AND ${leads_omni.is_pending_return} = 0
+    hidden: true
+
+  is_pending_return:
+    description: Is the record a pending return?
+    hidden: true
+
+  is_pending_return_lead_flag:
+    sql: ${leads_omni.is_pending_return} = 1
+    hidden: true
+
+  is_gross_signed:
+    sql: CASE WHEN ${leads_omni.is_signed} = 1 THEN 1 WHEN
+      ${leads_omni.is_delivered} = 1 THEN 1 WHEN ${leads_omni.is_pending_return}
+      = 1 THEN 1 WHEN ${leads_omni.is_returned} = 1 AND
+      ${leads_omni.is_pending_return} = 0 THEN 1 WHEN ${leads_omni.status} IN
+      ('Pending Correction', 'Failed TE QA', 'JV') THEN 1 ELSE 0 END
+    description: Does the record have an is_returned = 1 (and not pending return),
+      or a status of Pending Correction, Failed TE QA, or JV, or is it pending
+      return, signed, or delivered?
+    hidden: true
+
+  is_gross_signed_lead_flag:
+    sql: ${leads_omni.is_gross_signed} = 1
+    hidden: true
+
+  is_throttled:
+    description: Is the record throttled?
+    hidden: true
+
+  is_waterfall:
+    description: Is the record waterfalled?
+    hidden: true
+
+  is_throttled_lead_flag:
+    sql: ${leads_omni.is_throttled} = 1 AND ${leads_omni.is_waterfall} = 0
+    hidden: true
+
+  cherry_picked:
+    description: Is the record cherry_picked?
+    hidden: true
+
+  ##############################
+  # Booleans - Anura #
+  ##############################
+
+  is_bad_anura_response_lead_flag:
+    sql: ${leads_omni.anura_response} = 'bad'
+    hidden: true
+
+  ##############################
+  # Booleans - Smart Reviews #
+  ##############################
+
+  is_smart_review_confirmed_dx_lead_flag:
+    sql: CASE WHEN ${leads_omni.is_smart_review_eligible_lead_flag} IS TRUE AND
+      ${base__smart_reviews.smart_review_status} = '__CONFIRMED DX' THEN TRUE
+      ELSE FALSE END
+    hidden: true
+
+  is_smart_review_potentially_viable_lead_flag:
+    sql: CASE WHEN ${leads_omni.is_smart_review_eligible_lead_flag} IS TRUE AND
+      ${base__smart_reviews.smart_review_status} LIKE '%POTENTIALLY VIABLE%'
+      THEN TRUE ELSE FALSE END
+    hidden: true
+
+  is_smart_review_release_lead_flag:
+    sql: CASE WHEN ${leads_omni.is_smart_review_eligible_lead_flag} IS TRUE AND
+      ${base__smart_reviews.smart_review_current_status} = 'RELEASE' THEN TRUE
+      ELSE FALSE END
+    hidden: true
+
+  is_smart_review_keep_lead_flag:
+    sql: CASE WHEN ${leads_omni.is_smart_review_eligible_lead_flag} IS TRUE AND
+      ${base__smart_reviews.smart_review_current_status} = 'KEEP' THEN TRUE ELSE
+      FALSE END
+    hidden: true
+
+  is_smart_review_cnr_lead_flag:
+    sql: CASE WHEN ${leads_omni.is_smart_review_eligible_lead_flag} IS TRUE AND
+      ${base__smart_reviews.smart_review_current_status} = 'CNR' THEN TRUE ELSE
+      FALSE END
+    hidden: true
+
+  is_smart_review_empty_or_pending_lead_flag:
+    sql: CASE WHEN ${leads_omni.is_smart_review_eligible_lead_flag} IS TRUE AND
+      (${base__smart_reviews.smart_review_status} IS NULL OR
+      ${base__smart_reviews.smart_review_current_status} = 'PENDING') THEN TRUE
+      ELSE FALSE END
+    hidden: true
+
+  ##############################
+  # Booleans - Description #
+  ##############################
+
+  is_blank_description_lead_flag:
+    sql: ${leads_omni.description_value} = 'Blank' AND ${leads_omni.marketing_cost}
+      > 0 AND ${leads_omni.is_distributed_lead_flag} IS TRUE
+    hidden: true
+
+  ##############################
+  # Dates #
+  ##############################
+
+  created_at:
+    label: Lead Created At
+    description: Date of creation of the record.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  sold_at:
+    description: Date when the lead was distributed.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  signed_at:
+    description: Date when the lead signed with intake center.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  delivered_at:
+    description: Date when the lead was delivered.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  return_started_at:
+    sql: ${base__te_retool_lead_status_update.return_request_date}
+    description: Date when the return was started.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  last_action_at:
+    sql: TIMESTAMP(last_action_date)
+    description: Date when last action was performed.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  last_status_updated_at:
+    description: Date when the status was last updated.
+    group_label: Dates
+    timeframes:
+      [
+        raw,
+        date,
+        week,
+        day_of_week_name,
+        month,
+        quarter,
+        year,
+        hour,
+        time_of_day
+      ]
+
+  ##############################
+  # Dynamic Date #
+  ##############################
+
+  dynamic_date_selection:
+    sql: CASE WHEN {{# leads_omni.date_type_selector.filter }}'Lead'{{/
+      leads_omni.date_type_selector.filter }} THEN
+      ${leads_omni.created_at[date]} WHEN {{#
+      leads_omni.date_type_selector.filter }}'Sold'{{/
+      leads_omni.date_type_selector.filter }} THEN ${leads_omni.sold_at[date]}
+      WHEN {{# leads_omni.date_type_selector.filter }}'Signed'{{/
+      leads_omni.date_type_selector.filter }} THEN ${leads_omni.signed_at[date]}
+      WHEN {{# leads_omni.date_type_selector.filter }}'Delivered'{{/
+      leads_omni.date_type_selector.filter }} THEN
+      ${leads_omni.delivered_at[date]} WHEN {{#
+      leads_omni.date_type_selector.filter }}'Return Started'{{/
+      leads_omni.date_type_selector.filter }} THEN
+      ${leads_omni.return_started_at[date]} ELSE NULL END
+    label: Dynamic Date Selection
+    group_label: Dynamic Date
+    timeframes: [ date ]
+
+  ##############################
+  # Record-Level Durations #
+  ##############################
+
+  days_sold_to_signed:
+    sql: DATE_DIFF(signed_at, sold_at, day)
+    description: Days between sold to signed
+    group_label: Record-Level Durations
+
+measures:
+  ##############################
+  # Total Counts #
+  ##############################
+
+  distributed_leads_count:
+    sql: ${leads_omni.is_distributed_lead_flag}
+    label: Distributed Leads
+    group_label: Total Counts
+    description: Count of records where is_distributed_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_distributed_lead_flag:
+        is: true
+
+  pending_leads_count:
+    sql: ${leads_omni.is_pending_lead_flag}
+    label: Awaiting E-Sign
+    group_label: Total Counts
+    description: Count of records where is_pending_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_pending_lead_flag:
+        is: true
+
+  pending_return_leads_count:
+    sql: ${leads_omni.is_pending_return_lead_flag}
+    label: Pending Returns
+    group_label: Total Counts
+    description: Count of records where is_pending_return_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_pending_return_lead_flag:
+        is: true
+
+  returned_leads_count:
+    sql: ${leads_omni.is_returned_lead_flag}
+    label: Returned Leads
+    group_label: Total Counts
+    description: Count of records where is_returned_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_returned_lead_flag:
+        is: true
+
+  delivered_leads_count:
+    sql: ${leads_omni.is_delivered_lead_flag}
+    label: Billable
+    group_label: Total Counts
+    description: Count of records where is_delivered_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_delivered_lead_flag:
+        is: true
+
+  pending_correction_leads_count:
+    sql: ${leads_omni.is_pending_correction_lead_flag}
+    label: Signed Awaiting Correction
+    group_label: Total Counts
+    description: Count of records where is_pending_correction_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_pending_correction_lead_flag:
+        is: true
+
+  failed_te_qa_leads_count:
+    sql: ${leads_omni.is_failed_te_qa_lead_flag}
+    label: Failed TE QA
+    group_label: Total Counts
+    description: Count of records where is_failed_te_qa_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_failed_te_qa_lead_flag:
+        is: true
+
+  jv_leads_count:
+    sql: ${leads_omni.is_jv_lead_flag}
+    label: JV
+    group_label: Total Counts
+    description: Count of records where is_jv_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_jv_lead_flag:
+        is: true
+
+  signed_leads_count:
+    sql: ${leads_omni.is_signed_lead_flag}
+    label: Signed Leads
+    group_label: Total Counts
+    description: Count of records where is_signed_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_signed_lead_flag:
+        is: true
+
+  signed_in_qa_leads_count:
+    sql: ${leads_omni.is_signed_in_qa_lead_flag}
+    label: Signed in QA
+    group_label: Total Counts
+    description: Count of records where is_signed_in_qa_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_signed_in_qa_lead_flag:
+        is: true
+
+  paid_leads_count:
+    sql: ${leads_omni.is_paid_lead_flag}
+    label: Paid Leads
+    group_label: Total Counts
+    description: Count of records where is_paid_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_paid_lead_flag:
+        is: true
+
+  gross_signed_leads_count:
+    sql: ${leads_omni.is_gross_signed_lead_flag}
+    label: Gross Signed
+    group_label: Total Counts
+    description: Count of records where is_gross_signed_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_gross_signed_lead_flag:
+        is: true
+
+  throttled_leads_count:
+    sql: ${leads_omni.is_throttled_lead_flag}
+    label: Throttled
+    group_label: Total Counts
+    description: Count of records where is_throttled_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_throttled_lead_flag:
+        is: true
+
+  accepted_returns_count:
+    sql: ${leads_omni.is_accepted_return_lead_flag}
+    label: Accepted Returns
+    group_label: Total Counts
+    description: Count of records where is_accepted_return_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_accepted_return_lead_flag:
+        is: true
+
+  ##############################
+  # Total Counts - Anura #
+  ##############################
+
+  bad_anura_response_leads_count:
+    sql: ${leads_omni.is_bad_anura_response_lead_flag}
+    label: Bad Anura Response Leads
+    group_label: Total Counts - Anura
+    description: Count of records where is_bad_anura_reponse_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_bad_anura_response_lead_flag:
+        is: true
+
+  ##############################
+  # Total Counts - Smart Reviews #
+  ##############################
+
+  smart_review_eligible_leads_count:
+    sql: ${leads_omni.is_smart_review_eligible_lead_flag}
+    label: Smart Review Eligible Leads
+    group_label: Total Counts - Smart Reviews
+    description: Count of records where is_smart_review_eligible_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_smart_review_eligible_lead_flag:
+        is: true
+
+  smart_review_confirmed_dx_leads_count:
+    sql: ${leads_omni.is_smart_review_confirmed_dx_lead_flag}
+    label: SR Confirmed DX Leads
+    group_label: Total Counts - Smart Reviews
+    description: Count of records where is_smart_review_confirmed_dx_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_smart_review_confirmed_dx_lead_flag:
+        is: true
+
+  smart_review_potentially_viable_leads_count:
+    sql: ${leads_omni.is_smart_review_potentially_viable_lead_flag}
+    label: SR Potentially Viable Leads
+    group_label: Total Counts - Smart Reviews
+    description: Count of records where is_smart_review_potentially_viable_lead_flag
+      is TRUE.
+    aggregate_type: count
+    filters:
+      is_smart_review_potentially_viable_lead_flag:
+        is: true
+
+  smart_review_release_leads_count:
+    sql: ${leads_omni.is_smart_review_release_lead_flag}
+    label: SR Release Leads
+    group_label: Total Counts - Smart Reviews
+    description: Count of records where is_smart_review_release_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_smart_review_release_lead_flag:
+        is: true
+
+  smart_review_keep_leads_count:
+    sql: ${leads_omni.is_smart_review_keep_lead_flag}
+    label: SR Keep Leads
+    group_label: Total Counts - Smart Reviews
+    description: Count of records where is_smart_review_keep_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_smart_review_keep_lead_flag:
+        is: true
+
+  smart_review_cnr_leads_count:
+    sql: ${leads_omni.is_smart_review_cnr_lead_flag}
+    label: SR CNR Leads
+    group_label: Total Counts - Smart Reviews
+    description: Count of records where is_smart_review_cnr_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_smart_review_cnr_lead_flag:
+        is: true
+
+  smart_review_empty_or_pending_leads_count:
+    sql: ${leads_omni.is_smart_review_empty_or_pending_lead_flag}
+    label: SR Empty or Pending Leads
+    group_label: Total Counts - Smart Reviews
+    description: Count of records where is_smart_review_empty_or_pending_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_smart_review_empty_or_pending_lead_flag:
+        is: true
+
+  ##############################
+  # Total Counts - Description #
+  ##############################
+
+  blank_description_leads_count:
+    sql: ${leads_omni.is_blank_description_lead_flag}
+    label: Blank Description Leads
+    group_label: Total Counts - Description
+    description: Count of records where is_blank_description_lead_flag is TRUE.
+    aggregate_type: count
+    filters:
+      is_blank_description_lead_flag:
+        is: true
+
+  ##############################
+  # Total Costs #
+  ##############################
+
+  total_referral_fee_cost:
+    sql: ${leads_omni.referral_fee_cost}
+    label: Total Referral Fee Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total referral fees.
+    aggregate_type: sum
+
+  total_marketing_cost:
+    sql: ${leads_omni.marketing_cost}
+    label: Total Marketing Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total marketing related expenses.
+    aggregate_type: sum
+
+  total_intake_cost:
+    sql: ${leads_omni.intake_cost}
+    label: Total Intake Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total intake related expenses.
+    aggregate_type: sum
+
+  total_total_cost:
+    sql: ${leads_omni.total_cost}
+    label: Total Cost
+    group_label: Total Costs
+    format: usdcurrency
+    description: Sum of total expenses.
+    aggregate_type: sum
+
+  ##############################
+  # Total Revenue #
+  ##############################
+
+  total_total_revenue:
+    sql: ${leads_omni.total_revenue}
+    label: Total Revenue
+    group_label: Total Revenue
+    format: usdcurrency
+    description: Sum of total revenue generated.
+    aggregate_type: sum
+
+  ##############################
+  # Derived Metrics #
+  ##############################
+
+  total_total_profit:
+    sql: COALESCE(${leads_omni.total_revenue}, 0) -
+      COALESCE(${leads_omni.total_cost}, 0)
+    label: Total Profit
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Revenue - Total Cost)
+    aggregate_type: sum
+
+  total_profit_margin:
+    sql: (${leads_omni.total_total_revenue} - ${leads_omni.total_total_cost}) /
+      NULLIF(${leads_omni.total_total_revenue}, 0)
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Total Revenue - Total Cost) / (Total Revenue)
+
+  sum_delivered_and_signed_leads_count:
+    sql: CASE WHEN ${leads_omni.is_delivered_lead_flag} = TRUE THEN 1 ELSE 0 END +
+      CASE WHEN ${leads_omni.is_signed_lead_flag} = TRUE THEN 1 ELSE 0 END
+    label: DLVD + SGND Leads
+    group_label: Derived Metrics
+    description: (Delivered Leads + Signed Leads)
+    aggregate_type: sum
+
+  sum_pending_returns_and_accepted_returns_count:
+    sql: CASE WHEN ${leads_omni.is_pending_return_lead_flag} = TRUE THEN 1 ELSE 0
+      END + CASE WHEN ${leads_omni.is_accepted_return_lead_flag} = TRUE THEN 1
+      ELSE 0 END
+    label: Total Returns
+    group_label: Derived Metrics
+    description: (Pending Returns + Accepted Returns)
+    aggregate_type: sum
+
+  diff_gross_signed_and_returned_leads:
+    sql: ${leads_omni.gross_signed_leads_count} - ${leads_omni.returned_leads_count}
+    label: Gross SGND - RTRND Leads
+    group_label: Derived Metrics
+    description: (Gross Signed - Returned Leads)
+
+  delivered_and_signed_lead_conversion_rate:
+    sql: ${leads_omni.sum_delivered_and_signed_leads_count} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: CVR
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Delivered Leads + Signed Leads) / (Distributed Leads)
+
+  total_marketing_cost_per_distributed_lead:
+    sql: ${leads_omni.total_marketing_cost} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: MKT Cost / DST Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Marketing Cost) / (Distributed Leads)
+
+  total_marketing_cost_per_delivered_and_signed_lead:
+    sql: ${leads_omni.total_marketing_cost} /
+      NULLIF(${leads_omni.sum_delivered_and_signed_leads_count}, 0)
+    label: MKT Cost / DLVD + SGND Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Marketing Cost) / (Delivered Leads + Signed Leads)
+
+  total_marketing_cost_per_diff_gross_signed_and_returned_lead:
+    sql: ${leads_omni.total_marketing_cost} /
+      NULLIF(${leads_omni.diff_gross_signed_and_returned_leads}, 0)
+    label: MKT Cost / Gross SGND - RTRND Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Marketing Cost) / (Gross Signed - Returned Leads)
+
+  total_cost_per_diff_gross_signed_and_returned_lead:
+    sql: ${leads_omni.total_total_cost} /
+      NULLIF(${leads_omni.diff_gross_signed_and_returned_leads}, 0)
+    label: Total Cost / Gross SGND - RTRND Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Cost) / (Gross Signed - Returned Leads)
+
+  total_cost_per_delivered_and_signed_lead:
+    sql: ${leads_omni.total_total_cost} /
+      NULLIF(${leads_omni.sum_delivered_and_signed_leads_count}, 0)
+    label: Total Cost / DLVD + SGND Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Cost) / (Delivered Leads + Signed Leads)
+
+  total_cost_per_distributed_lead:
+    sql: ${leads_omni.total_total_cost} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: Total Cost / DST Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Cost) / (Distributed Leads)
+
+  total_revenue_per_distributed_lead:
+    sql: ${leads_omni.total_total_revenue} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: Total Revenue / DST Lead
+    group_label: Derived Metrics
+    format: usdcurrency
+    description: (Total Revenue) / (Distributed Leads)
+
+  total_returns_per_gross_signed_leads:
+    sql: ${leads_omni.sum_pending_returns_and_accepted_returns_count} /
+      NULLIF(${leads_omni.gross_signed_leads_count}, 0)
+    label: Total Return Rate
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Total Returns) / (Gross Signed Leads)
+
+  total_gross_signed_leads_per_distributed_leads:
+    sql: ${leads_omni.gross_signed_leads_count} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: Gross Signed CVR of Distributed Leads
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Gross Signed Leads) / (Distributed Leads)
+
+  total_delivered_leads_per_distributed_leads:
+    sql: ${leads_omni.delivered_leads_count} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: Billable CVR of Distributed Leads
+    group_label: Derived Metrics
+    format: percent_2
+    description: (Billable Leads) / (Distributed Leads)
+
+  ##############################
+  # Derived Metrics - Anura #
+  ##############################
+
+  total_bad_anura_response_leads_per_distributed_leads:
+    sql: ${leads_omni.bad_anura_response_leads_count} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: Bad Anura Score %
+    group_label: Derived Metrics - Anura
+    format: percent_2
+    description: (Bad Anura Response Leads) / (Distributed Leads)
+
+  ##############################
+  # Derived Metrics - Smart Reviews #
+  ##############################
+
+  smart_review_confirmed_dx_leads_percentage:
+    sql: ${leads_omni.smart_review_confirmed_dx_leads_count} /
+      NULLIF(${leads_omni.smart_review_eligible_leads_count}, 0)
+    label: SR Confirmed DX %
+    group_label: Derived Metrics - Smart Reviews
+    format: percent_2
+    description: (SR Confirmed DX Leads) / (Smart Review Eligible Leads)
+
+  smart_review_potentially_viable_leads_percentage:
+    sql: ${leads_omni.smart_review_potentially_viable_leads_count} /
+      NULLIF(${leads_omni.smart_review_eligible_leads_count}, 0)
+    label: SR Potentially Viable %
+    group_label: Derived Metrics - Smart Reviews
+    format: percent_2
+    description: (SR Potentially Viable Leads) / (Smart Review Eligible Leads)
+
+  smart_review_release_leads_percentage:
+    sql: ${leads_omni.smart_review_release_leads_count} /
+      NULLIF(${leads_omni.smart_review_eligible_leads_count}, 0)
+    label: SR Release %
+    group_label: Derived Metrics - Smart Reviews
+    format: percent_2
+    description: (SR Release Leads) / (Smart Review Eligible Leads)
+
+  smart_review_keep_leads_percentage:
+    sql: ${leads_omni.smart_review_keep_leads_count} /
+      NULLIF(${leads_omni.smart_review_eligible_leads_count}, 0)
+    label: SR Keep %
+    group_label: Derived Metrics - Smart Reviews
+    format: percent_2
+    description: (SR Keep Leads) / (Smart Review Eligible Leads)
+
+  smart_review_cnr_leads_percentage:
+    sql: ${leads_omni.smart_review_cnr_leads_count} /
+      NULLIF(${leads_omni.smart_review_eligible_leads_count}, 0)
+    label: SR CNR %
+    group_label: Derived Metrics - Smart Reviews
+    format: percent_2
+    description: (SR CNR Leads) / (Smart Review Eligible Leads)
+
+  smart_review_empty_or_pending_leads_percentage:
+    sql: ${leads_omni.smart_review_empty_or_pending_leads_count} /
+      NULLIF(${leads_omni.smart_review_eligible_leads_count}, 0)
+    label: SR Empty or Pending %
+    group_label: Derived Metrics - Smart Reviews
+    format: percent_2
+    description: (SR Empty or Pending leads) / (Smart Review Eligible Leads)
+
+  ##############################
+  # Derived Metrics - Description #
+  ##############################
+
+  blank_description_leads_percentage:
+    sql: ${leads_omni.blank_description_leads_count} /
+      NULLIF(${leads_omni.distributed_leads_count}, 0)
+    label: Blank Description %
+    group_label: Derived Metrics - Description
+    format: percent_2
+    description: (Blank Description Leads) / (Distributed Leads)
+
+  ##############################
+  # Average Durations #
+  ##############################
+
+  avg_days_sold_to_signed:
+    sql: ${days_sold_to_signed}
+    label: AVG Days Sold to Signed
+    group_label: Average Durations
+    description: Average days between sold to signed.
+    aggregate_type: average
+
+  ##############################
+  # Row-Level Drill #
+  ##############################
+
+  see_details:
+    sql: ${lead_client_id}
+    label: See Details
+    group_label: Row-Level Drill
+    description: Clickable drill field
+    aggregate_type: count
+
+filters:
+  ##############################
+  # Date Filters #
+  ##############################
+
+  date_type_selector:
+    type: string
+    group_label: Date Filters
+    suggestion_list:
+      - value: Lead
+      - value: Sold
+      - value: Signed
+      - value: Delivered
+      - value: Return Started
+
+default_drill_fields:
+  [
+    lead_id,
+    lead_client_id,
+    created_at,
+    sold_at,
+    signed_at,
+    last_status_updated_at,
+    status,
+    email_drop,
+    anura_response,
+    marketing_cost,
+    intake_cost,
+    total_cost,
+    total_revenue,
+    s1,
+    s2,
+    s3
+  ]

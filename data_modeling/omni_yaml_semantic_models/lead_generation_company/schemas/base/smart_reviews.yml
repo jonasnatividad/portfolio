@@ -1,0 +1,23 @@
+# Reference this view as base__smart_reviews
+schema: base
+table_name: smart_reviews
+
+dimensions:
+  ##############################
+  # IDs #
+  ##############################
+
+  lead_client_id:
+    format: ID
+    description: Client lead ID matched from various sources. Primary key for the
+      table. Used to match to records in Looker
+
+  ##############################
+  # Key Metrics #
+  ##############################
+
+  smart_review_status:
+    description: Current status of the smart review case
+
+  smart_review_current_status:
+    description: Most recent status update for the smart review

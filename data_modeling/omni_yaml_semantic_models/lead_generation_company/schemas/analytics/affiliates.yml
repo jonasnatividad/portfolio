@@ -1,0 +1,16 @@
+# Reference this view as analytics__affiliates
+schema: analytics
+table_name: affiliates
+
+dimensions:
+  affiliate_id:
+    format: ID
+    description: Foreign key to affiliates table - unique identifier for the
+      affiliate partner who generated the lead.
+    primary_key: true
+
+  affiliate:
+    description: Name of the affiliate partner (denormalized for convenience).
+
+  account_manager:
+    description: Account manager assigned to this affiliate

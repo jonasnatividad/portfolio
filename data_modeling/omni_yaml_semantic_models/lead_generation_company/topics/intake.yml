@@ -1,0 +1,13 @@
+base_view: intake_omni
+description: Reporting topic that captures call center and intake center
+  activity and performance across multiple levels of detail, from individual
+  call records to agent-level and aggregate operational metrics. This enables
+  consistent analysis of call handling, dispositions, and agent productivity,
+  providing clear visibility into how the intake operation is performing over
+  time.
+
+fields: [ intake_omni.*, intake_activity_omni.* ]
+
+joins:
+  intake_activity_omni: {}
+  leads_omni: {}

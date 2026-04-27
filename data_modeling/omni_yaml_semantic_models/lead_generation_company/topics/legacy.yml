@@ -1,0 +1,9 @@
+base_view: legacy_omni
+label: Legacy
+description: Legacy reporting topic designed for focused analysis. Includes the
+  essential key performance metrics historically used across the business, along
+  with legacy terminology.
+
+fields: [ legacy_omni.* ]
+
+joins: {}

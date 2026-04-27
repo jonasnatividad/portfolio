@@ -1,0 +1,20 @@
+included_schemas: [ analytics, base, reporting_views, snapshots ]
+
+included_views:
+  [
+    legacy_omni,
+    leads_omni,
+    leads_snapshot_omni,
+    detached_date_omni,
+    analytics__affiliates,
+    analytics__campaigns,
+    analytics__contract,
+    analytics__deals,
+    analytics__lead,
+    base__gcp_mysql_tf_insights,
+    base__smart_reviews,
+    base__te_retool_lead_status_update,
+    reporting_views__smart_reviews_deals_eligible,
+    intake_omni,
+    intake_activity_omni
+  ]

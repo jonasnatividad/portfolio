@@ -1,0 +1,55 @@
+# Reference this view as analytics__contract
+schema: analytics
+table_name: contract
+
+dimensions:
+  filters: {}
+  tier: {}
+
+  contract_id:
+    format: ID
+    description: Foreign key to contracts table - unique identifier for the contract
+      through which the lead was distributed to the client.
+    primary_key: true
+
+  contract:
+    description: Name of the contract (denormalized for convenience). Defines terms
+      for distributing leads to clients.
+
+  client_id:
+    format: ID
+    description: Foreign key to clients table - unique identifier for the
+      client/advertiser (law firm or legal service provider).
+
+  client:
+    description: Name of the client/advertiser (denormalized for convenience). Some
+      names are normalized (e.g., 'DIF Management (Ross)' becomes 'DIF').
+
+  lawsuit_id:
+    format: ID
+    description: Foreign key to lawsuits table - unique identifier for the
+      lawsuit/vertical (legal case type or practice area). Verticals in
+      Leadspedia are renamed to lawsuits in the analytics database.
+
+  lawsuit:
+    description: Name of the lawsuit/vertical (denormalized for convenience).
+      Represents different legal case types or practice areas (e.g., 'Roundup',
+      'Talc', etc.).
+
+  deal_id:
+    format: ID
+    description: Foreign key to deals table - unique identifier for the Pipedrive
+      deal associated with the contract.
+
+  lead_type:
+    description: "Type of leads this contract accepts: 'Phone' for phone calls,
+      'Web' for form submissions"
+
+  call_center:
+    label: Intake Center
+    description: Call center identifier extracted from contract name (e.g., 'SLP',
+      'LAE', 'LCC', 'ALERT', 'ICE', 'ROD', 'LIP', 'RCP', 'OPUS', 'Jurist', 'TE',
+      'Yuri') or client name if not specified
+
+  investor_id:
+    format: ID

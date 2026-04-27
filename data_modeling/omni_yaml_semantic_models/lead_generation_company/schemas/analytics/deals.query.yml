@@ -1,0 +1,32 @@
+# Reference this view as analytics__deals
+schema: analytics
+sql: |
+  SELECT d.*, dd.* EXCEPT (deal_id) 
+  FROM `tortexports.analytics.deals` d
+  LEFT JOIN `tortexports.reporting_views.deal_dates` dd ON dd.deal_id = d.deal_id
+
+dimensions:
+  deal_id:
+    format: ID
+    description: Foreign key to contract table - unique identifier for the deal
+      assigned from Pipedrive.
+    primary_key: true
+
+  deal_title:
+    label: Deal
+    description: Deal.
+
+  deal_active:
+    description: Is the deal active?
+    hidden: true
+
+  is_deal_active_flag:
+    sql: ${analytics__deals.deal_active} > 0
+    description: Is the deal active?
+    hidden: true
+
+  owner_name:
+    description: Owner assigned to the deal.
+
+  manager:
+    description: Manager assigned to the deal.

@@ -1,0 +1,27 @@
+# Reference this view as analytics__campaigns
+schema: analytics
+table_name: campaigns
+
+dimensions:
+  campaign_id:
+    format: ID
+    description: Foreign key to campaigns table - unique identifier for the campaign
+      that generated the lead.
+    primary_key: true
+
+  campaign:
+    description: Name of the marketing campaign (denormalized for convenience).
+
+  affiliate_id:
+    format: ID
+    description: Foreign key to affiliates table - unique identifier for the
+      affiliate partner who generated the lead.
+
+  affiliate:
+    description: Name of the affiliate partner (denormalized for convenience).
+
+  campaign_type:
+    description: Campaign type.
+
+  lead_payment_type:
+    description: Lead payment type.
