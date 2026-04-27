@@ -1,0 +1,228 @@
+{
+  "Name": "pb_combined_export_sanitized",
+  "CreationDate": "2025-8-27",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "https://my.pitchbook.com/search-results/<YOUR_SEARCH_ID>/deals",
+      "Value": "",
+      "Description": "Opens the 'Deals' tab of your saved PitchBook search. Replace <YOUR_SEARCH_ID> with your actual search ID."
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand1",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand1}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"search-results-nav\"]/div/div/div/div[3]/div[2]/button/div/span[2]",
+      "Value": "",
+      "Description": "Clicks the 'Export' button."
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand2",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand2}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "onDownload",
+      "Target": "",
+      "Value": "true",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"portal-holder\"]//button[.//span[normalize-space()='Download'] or contains(normalize-space(.),'Download')]",
+      "Value": "",
+      "Description": "Clicks the final 'Download' button in the modal."
+    },
+    {
+      "Command": "XRunAndWait",
+      "Target": "/bin/sh",
+      "Value": "-c \"DLDIR='/path/to/your/Downloads'; i=0; while [ $i -lt 60 ]; do LATEST=$(ls -t \\\"$DLDIR\\\"/PitchBook_Search_Result_Columns_*.xlsx 2>/dev/null | head -n1); if [ -n \\\"$LATEST\\\" ] && [ ! -f \\\"$LATEST.crdownload\\\" ]; then break; fi; i=$((i+1)); sleep 1; done; if [ -f \\\"$LATEST\\\" ]; then BASENAME=$(basename \\\"$LATEST\\\"); mv -f \\\"$LATEST\\\" \\\"$DLDIR/deals_$BASENAME\\\"; fi\"",
+      "Description": "Waits for the download to complete and renames the file to 'deals_...'. Update DLDIR to your downloads folder."
+    },
+    {
+      "Command": "open",
+      "Target": "https://my.pitchbook.com/search-results/<YOUR_SEARCH_ID>/companies",
+      "Value": "",
+      "Description": "Opens the 'Companies' tab of your saved PitchBook search."
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand3",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand3}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"search-results-nav\"]/div/div/div/div[3]/div[3]/button/div/span[2]",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand4",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand4}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "onDownload",
+      "Target": "",
+      "Value": "true",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"portal-holder\"]//button[.//span[normalize-space()='Download'] or contains(normalize-space(.),'Download')]",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "XRunAndWait",
+      "Target": "/bin/sh",
+      "Value": "-c \"DLDIR='/path/to/your/Downloads'; i=0; while [ $i -lt 60 ]; do LATEST=$(ls -t \\\"$DLDIR\\\"/PitchBook_Search_Result_Columns_*.xlsx 2>/dev/null | head -n1); if [ -n \\\"$LATEST\\\" ] && [ ! -f \\\"$LATEST.crdownload\\\" ]; then break; fi; i=$((i+1)); sleep 1; done; if [ -f \\\"$LATEST\\\" ]; then BASENAME=$(basename \\\"$LATEST\\\"); mv -f \\\"$LATEST\\\" \\\"$DLDIR/companies_$BASENAME\\\"; fi\"",
+      "Description": "Waits for the download to complete and renames the file to 'companies_...'. Update DLDIR to your downloads folder."
+    },
+    {
+      "Command": "open",
+      "Target": "https://my.pitchbook.com/search-results/<YOUR_SEARCH_ID>/investors",
+      "Value": "",
+      "Description": "Opens the 'Investors' tab of your saved PitchBook search."
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand5",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand5}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"search-results-nav\"]/div/div/div/div[3]/div[3]/button/div/span[2]",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand6",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand6}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "onDownload",
+      "Target": "",
+      "Value": "true",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"portal-holder\"]//button[.//span[normalize-space()='Download'] or contains(normalize-space(.),'Download')]",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "XRunAndWait",
+      "Target": "/bin/sh",
+      "Value": "-c \"DLDIR='/path/to/your/Downloads'; i=0; while [ $i -lt 60 ]; do LATEST=$(ls -t \\\"$DLDIR\\\"/PitchBook_Search_Result_Columns_*.xlsx 2>/dev/null | head -n1); if [ -n \\\"$LATEST\\\" ] && [ ! -f \\\"$LATEST.crdownload\\\" ]; then break; fi; i=$((i+1)); sleep 1; done; if [ -f \\\"$LATEST\\\" ]; then BASENAME=$(basename \\\"$LATEST\\\"); mv -f \\\"$LATEST\\\" \\\"$DLDIR/investors_$BASENAME\\\"; fi\"",
+      "Description": "Waits for the download to complete and renames the file to 'investors_...'. Update DLDIR to your downloads folder."
+    },
+    {
+      "Command": "open",
+      "Target": "https://my.pitchbook.com/search-results/<YOUR_SECOND_SEARCH_ID>/investors",
+      "Value": "",
+      "Description": "Opens the 'Investors' tab of a second saved search (e.g., for 'Signal Investors')."
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand7",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand7}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"search-results-nav\"]/div/div/div/div[3]/div[3]/button/div/span[2]",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Math.floor(Math.random()*2000)+1000;",
+      "Value": "rand8",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "${rand8}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "onDownload",
+      "Target": "",
+      "Value": "true",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"portal-holder\"]//button[.//span[normalize-space()='Download'] or contains(normalize-space(.),'Download')]",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "XRunAndWait",
+      "Target": "/bin/sh",
+      "Value": "-c \"DLDIR='/path/to/your/Downloads'; i=0; while [ $i -lt 60 ]; do LATEST=$(ls -t \\\"$DLDIR\\\"/PitchBook_Search_Result_Columns_*.xlsx 2>/dev/null | head -n1); if [ -n \\\"$LATEST\\\" ] && [ ! -f \\\"$LATEST.crdownload\\\" ]; then break; fi; i=$((i+1)); sleep 1; done; if [ -f \\\"$LATEST\\\" ]; then BASENAME=$(basename \\\"$LATEST\\\"); mv -f \\\"$LATEST\\\" \\\"$DLDIR/signal_investors_$BASENAME\\\"; fi\"",
+      "Description": "Waits for the download to complete and renames the file to 'signal_investors_...'. Update DLDIR to your downloads folder."
+    },
+    {
+      "Command": "XRunAndWait",
+      "Target": "/bin/sh",
+      "Value": "-c \"DLDIR='/path/to/your/Downloads'; DESTDIR='/path/to/your/project/output'; mv -f \\\"$(ls \\\"$DLDIR\\\"/deals_*.xlsx 2>/dev/null | head -n1)\\\" \\\"$DESTDIR/Deals/\\\"; mv -f \\\"$(ls \\\"$DLDIR\\\"/companies_*.xlsx 2>/dev/null | head -n1)\\\" \\\"$DESTDIR/Companies/\\\"; mv -f \\\"$(ls \\\"$DLDIR\\\"/investors_*.xlsx 2>/dev/null | head -n1)\\\" \\\"$DESTDIR/Investors/\\\"; mv -f \\\"$(ls \\\"$DLDIR\\\"/signal_investors_*.xlsx 2>/dev/null | head -n1)\\\" \\\"$DESTDIR/Signal_Investors/\\\";\"",
+      "Description": "Moves all the downloaded and renamed files from the Downloads folder to their final destination folders. Update DLDIR and DESTDIR."
+    }
+  ]
+}
