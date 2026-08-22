@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Jammed Up</title>
+  <link rel="icon" type="image/png" href="all_jammed_up_logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background: #000000;
+      font-family: 'Open Sans', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    img.logo {
+      width: 250px;
+      max-width: 80%;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      border: 4px solid #ffd700;
+      box-shadow: 0 0 10px #000;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      margin: 0.5rem 0;
+      color: #ffd700;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+
+    .festival {
+      margin-top: 1rem;
+      background: #111;
+      border: 2px solid #ffd700;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .festival h2 {
+      color: #ffd700;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .festival .event-date,
+    .festival .event-location {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin: 0.25rem 0 1rem 0;
+    }
+
+    .past-event-badge {
+      display: inline-block;
+      margin-top: 1rem;
+      background: rgba(255, 215, 0, 0.1);
+      border: 2px dashed #ffd700;
+      color: #ffd700;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+    }
+
+    .map-embed iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .media-section {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .media-section h2 {
+      color: #ffd700;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .spotify-embed iframe {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    iframe {
+      border-radius: 12px;
+    }
+
+    .socials {
+      margin-top: 3rem;
+    }
+
+    .socials a {
+      color: #ffd700;
+      margin: 0 15px;
+      font-size: 2rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .socials a:hover {
+      color: #fff;
+    }
+
+  </style>
+</head>
+<body>
+  <img class="logo" src="all_jammed_up_logo.png" alt="All Jammed Up Logo" />
+  <h1>ALL JAMMED UP</h1>
+  <div class="tagline">A Music Festival + Podcast Experience</div>
+
+  <section class="festival">
+    <h2>🎉 All Jammed Up Festival – Asheville</h2>
+    <p class="event-date">Saturday, July 19, 2025<br>1:00 PM – 7:00 PM</p>
+    <p class="event-location">
+      One World Brewing – West<br>
+      520 Haywood Road<br>
+      Asheville, North Carolina 28806
+    </p>
+
+    <div class="past-event-badge">PAST EVENT — THANKS FOR JAMMING WITH US</div>
+
+    <div class="map-embed">
+      <iframe
+        src="https://www.google.com/maps?q=520+Haywood+Rd,+Asheville,+NC+28806&output=embed"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+
+  <section class="media-section spotify-embed">
+    <h2>🎧 Listen to the Latest Episode</h2>
+    <iframe 
+      src="https://open.spotify.com/embed/show/0gfkyLqlQrp14bB0BpM5km?utm_source=generator"
+      height="232" 
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </section>
+
+  <div class="socials">
+    <a href="https://www.instagram.com/alljammedup_/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://open.spotify.com/show/0gfkyLqlQrp14bB0BpM5km?si=b0144dcd472246f9" target="_blank" title="Spotify"><i class="fab fa-spotify"></i></a>
+    <a href="https://www.youtube.com/@AllJammedUpPod" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+
+
+</body>
+</html>
