@@ -179,7 +179,7 @@ portfolio/
 │       ├── semantic_layer.png
 │       └── end_to_end_platform.png
 │
-├── automation_projects/
+├── ai_automation/
 │   ├── README.md
 │   ├── reddit_ai_assistant_bot/
 │   │   ├── README.md
