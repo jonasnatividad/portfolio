@@ -170,11 +170,24 @@ portfolio/
 │   └── cost_controls/
 │       └── bigquery_cost_analysis.sql
 │
-└── architecture/
-    ├── README.md
-    ├── system_overview.md
-    └── diagrams/
-        ├── ingestion_flow.png
-        ├── warehouse_layer.png
-        ├── semantic_layer.png
-        └── end_to_end_platform.png
+├── architecture/
+│   ├── README.md
+│   ├── system_overview.md
+│   └── diagrams/
+│       ├── ingestion_flow.png
+│       ├── warehouse_layer.png
+│       ├── semantic_layer.png
+│       └── end_to_end_platform.png
+│
+├── automation_projects/
+│   ├── README.md
+│   ├── reddit_ai_assistant_bot/
+│   │   ├── README.md
+│   │   └── main.py
+│   └── ai_generated_hybrid_animals/
+│       ├── README.md
+│       ├── main.py
+│       └── example_output.jpg
+│
+└── web_development/
+    └── README.md                                       # Reserved — client/product web builds
