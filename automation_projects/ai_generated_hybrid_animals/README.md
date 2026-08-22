@@ -4,6 +4,12 @@ An end-to-end content pipeline: an LLM writes an image prompt and social caption
 
 ---
 
+## Example Output
+
+![Example generated hybrid animal](example_output.jpg)
+
+---
+
 ## How It Works
 
 1. **Randomize a concept** — Randomly picks two distinct animals, an environment, and an action from curated word lists (e.g. "a hybrid between a *lynx* and a *narwhal*, in a *fjord*, *gliding*")
@@ -25,7 +31,8 @@ flowchart LR
 
 ```
 ai_generated_hybrid_animals/
-└── main.py  # Randomize → prompt → generate → post
+├── main.py             # Randomize → prompt → generate → post
+└── example_output.jpg  # Sample generated image
 ```
 
 ---
