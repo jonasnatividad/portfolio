@@ -190,4 +190,8 @@ portfolio/
 │       └── example_output.jpg
 │
 └── web_development/
-    └── README.md                                       # Reserved — client/product web builds
+    ├── README.md
+    └── all_jammed_up_festival_site/
+        ├── README.md
+        ├── index.html
+        └── all_jammed_up_logo.png
