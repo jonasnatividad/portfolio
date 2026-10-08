@@ -1,0 +1,87 @@
+schema: thelook_ecommerce
+table_name: events
+label: Web Events
+description: Clickstream events. One row per page or action event; anonymous visitors have a null user_id.
+
+dimensions:
+  id:
+    sql: '"id"'
+    type: number
+    primary_key: true
+    label: Event ID
+
+  user_id:
+    sql: '"user_id"'
+    type: number
+    hidden: true
+
+  session_id:
+    sql: '"session_id"'
+    type: string
+    label: Session ID
+
+  sequence_number:
+    sql: '"sequence_number"'
+    type: number
+    description: Position of the event within its session (1 = landing event).
+
+  event_type:
+    sql: '"event_type"'
+    type: string
+    description: home, department, product, cart, purchase, cancel.
+
+  uri:
+    sql: '"uri"'
+    type: string
+    label: Page URI
+
+  browser:
+    sql: '"browser"'
+    type: string
+
+  traffic_source:
+    sql: '"traffic_source"'
+    type: string
+    label: Session Traffic Source
+
+  city:
+    sql: '"city"'
+    type: string
+
+  state:
+    sql: '"state"'
+    type: string
+
+  ip_address:
+    sql: '"ip_address"'
+    type: string
+    hidden: true
+
+  created_at:
+    sql: '"created_at"'
+    type: timestamp
+    label: Event
+    timeframes: [raw, hour, date, week, month]
+
+measures:
+  count:
+    aggregate_type: count
+    label: Events
+
+  session_count:
+    sql: ${events.session_id}
+    aggregate_type: count_distinct
+    label: Sessions
+
+  purchase_session_count:
+    sql: ${events.session_id}
+    aggregate_type: count_distinct
+    label: Sessions with Purchase
+    filters:
+      event_type:
+        is: purchase
+
+  session_conversion_rate:
+    sql: SAFE_DIVIDE(${events.purchase_session_count}, ${events.session_count})
+    format: percent_2
+    label: Session Conversion Rate

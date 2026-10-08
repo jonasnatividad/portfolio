@@ -1,0 +1,31 @@
+schema: thelook_ecommerce
+table_name: distribution_centers
+label: Distribution Centers
+description: Warehouses that stock and ship products. Small dimension table (about ten rows).
+
+dimensions:
+  id:
+    sql: '"id"'
+    type: number
+    primary_key: true
+    label: Distribution Center ID
+
+  name:
+    sql: '"name"'
+    type: string
+    label: Distribution Center
+
+  latitude:
+    sql: '"latitude"'
+    type: number
+    hidden: true
+
+  longitude:
+    sql: '"longitude"'
+    type: number
+    hidden: true
+
+measures:
+  count:
+    aggregate_type: count
+    label: Distribution Center Count

@@ -1,0 +1,24 @@
+base_view: users
+label: Customers
+description: |
+  One row per customer, with their orders, web sessions and repeat-campaign
+  eligibility. Use for cohort, acquisition-channel and audience questions.
+
+joins:
+  orders: {}
+  events: {}
+  orders_eligible_for_repeat_campaign: {}
+
+fields:
+  - users.*
+  - orders.count
+  - orders.completed_order_count
+  - orders.return_rate
+  - orders.created_at
+  - events.session_count
+  - events.session_conversion_rate
+  - orders_eligible_for_repeat_campaign.*
+
+ai_context: |
+  To build a campaign audience, filter orders_eligible_for_repeat_campaign.eligible_customer_count > 0
+  or use the send_wave dimension. Customer count is users.count, not orders.customer_count.

@@ -1,0 +1,17 @@
+base_view: inventory_items
+label: Inventory
+description: |
+  Stock position, sell-through and inventory age by product, brand and
+  distribution center. One row per physical unit.
+
+joins:
+  products:
+    distribution_centers: {}
+
+fields:
+  - inventory_items.*
+  - products.*
+  - distribution_centers.*
+
+ai_context: |
+  "In stock" means sold_at is null. Sell-through = units sold / units received.

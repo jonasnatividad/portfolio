@@ -1,0 +1,25 @@
+# Model file: settings that apply to every view and topic in this model.
+#
+# Connection assumptions (configured in Omni, not in this file):
+#   - Dialect: BigQuery
+#   - Billing project: your-gcp-project
+#   - Database (project) holding the data: bigquery-public-data
+#   - Schema (dataset): thelook_ecommerce
+
+# Only build views for the public retail dataset; ignore everything else the
+# service account can see.
+included_schemas:
+  - thelook_ecommerce
+
+# Calendar settings used by every timeframe (week, quarter, year).
+week_start_day: Monday
+fiscal_month_offset: 0
+
+# Teams that can see margin and cost fields. Referenced by `required_access_grants`
+# on cost-related measures in the base views.
+access_grants:
+  finance_only:
+    user_attribute: department
+    allowed_values:
+      - finance
+      - leadership

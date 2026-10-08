@@ -1,0 +1,49 @@
+# Which BigQuery tables to copy into Postgres, and how.
+#
+# mode:
+#   incremental - copy rows whose watermark is newer than the last synced value
+#                 (minus `lookback_minutes`, to catch late-arriving updates)
+#   full        - copy every row each run (small tables with no change timestamp)
+#
+# watermark_sql: a BigQuery expression evaluated per row. It can combine
+#   several timestamps so that status changes (shipped, delivered, returned)
+#   are picked up, not just new rows.
+#
+# Upserts are idempotent (INSERT ... ON CONFLICT (primary_key) DO UPDATE),
+# so overlap from the lookback window is harmless.
+
+source_project: bigquery-public-data
+source_dataset: thelook_ecommerce
+target_schema: retail
+
+tables:
+  - name: orders
+    mode: incremental
+    primary_key: [order_id]
+    watermark_sql: GREATEST(created_at, IFNULL(shipped_at, created_at), IFNULL(delivered_at, created_at), IFNULL(returned_at, created_at))
+    lookback_minutes: 120
+    columns: [order_id, user_id, status, gender, created_at, shipped_at, delivered_at, returned_at, num_of_item]
+
+  - name: order_items
+    mode: incremental
+    primary_key: [id]
+    watermark_sql: GREATEST(created_at, IFNULL(shipped_at, created_at), IFNULL(delivered_at, created_at), IFNULL(returned_at, created_at))
+    lookback_minutes: 120
+    columns: [id, order_id, user_id, product_id, inventory_item_id, status, created_at, shipped_at, delivered_at, returned_at, sale_price]
+
+  - name: users
+    mode: incremental
+    primary_key: [id]
+    watermark_sql: created_at
+    lookback_minutes: 60
+    columns: [id, first_name, last_name, email, age, gender, state, city, country, postal_code, traffic_source, created_at]
+
+  - name: products
+    mode: full
+    primary_key: [id]
+    columns: [id, cost, category, name, brand, retail_price, department, sku, distribution_center_id]
+
+  - name: distribution_centers
+    mode: full
+    primary_key: [id]
+    columns: [id, name, latitude, longitude]

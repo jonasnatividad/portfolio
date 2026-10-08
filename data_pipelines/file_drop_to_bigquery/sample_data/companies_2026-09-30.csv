@@ -1,0 +1,61 @@
+company_id,company_name,industry,employee_band,country,account_owner,created_date
+C1000,  Quarry Dental Group,Healthcare,1000+,US,Morgan Diaz,2025-02-19
+C1001,  Atlas Foods Ltd,Food & Beverage,201-1000,CA,Avery Stone,2025-08-08
+C1002,  Copper Logistics Ltd,Transportation,1000+,US,Jordan Lee,2026-03-11
+C1003,  Atlas Studios Inc,Media,11-50,US,Riley Chen,2025-08-15
+C1004,Cedar Builders Inc,Construction,11-50,US,Casey Patel,2026-08-08
+C1005,  Atlas Labs LLC,Software,1-10,GB,Avery Stone,2026-01-17
+C1006,Kestrel Robotics Group,Manufacturing,51-200,CA,Casey Patel,2026-06-29
+C1007,Willow Analytics Co,Software,11-50,US,Casey Patel,2025-09-12
+C1008,Maple Builders Group,Construction,51-200,GB,Avery Stone,2025-12-18
+C1009,Granite Builders Group,Construction,11-50,CA,Riley Chen,2025-06-18
+C1010,Blue Labs Inc,Software,51-200,US,Morgan Diaz,2026-07-26
+C1011,  Kestrel Clinics Ltd,Healthcare,1-10,US,Riley Chen,2026-04-13
+C1012,Bright Foods Co,Food & Beverage,201-1000,US,Riley Chen,2026-08-15
+C1013,Signal Foods Group,Food & Beverage,1-10,CA,Avery Stone,2025-12-30
+C1014,Summit Supply Co,Wholesale,201-1000,CA,Riley Chen,2025-05-13
+C1015,Bright Dental Group,Healthcare,11-50,DE,Riley Chen,2026-02-16
+C1016,Pioneer Outfitters Group,Retail,201-1000,US,Jordan Lee,2026-01-03
+C1017,Bright Dental LLC,Healthcare,1-10,CA,Casey Patel,2025-08-26
+C1018,Harbor Outfitters Co,Retail,1000+,US,Casey Patel,2025-01-05
+C1019,Atlas Analytics LLC,Software,1-10,CA,Casey Patel,2026-06-12
+C1020,Tidal Studios Group,Media,201-1000,US,Jordan Lee,2026-02-08
+C1021,Bright Robotics Group,Manufacturing,1000+,US,Avery Stone,2025-06-16
+C1022,North Freight LLC,Transportation,51-200,GB,Avery Stone,2026-07-04
+C1023,Bright Energy LLC,Energy,51-200,US,Casey Patel,2026-01-21
+C1024,Signal Clinics Inc,Healthcare,201-1000,CA,Riley Chen,2025-04-29
+C1025,Maple Logistics LLC,Transportation,51-200,CA,Jordan Lee,2025-04-15
+C1026,Orbit Foods LLC,Food & Beverage,1000+,US,Casey Patel,2026-06-25
+C1027,Maple Labs Inc,Software,11-50,US,Jordan Lee,2025-09-25
+C1028,Pioneer Builders Ltd,Construction,1000+,DE,Jordan Lee,2025-12-04
+C1029,Copper Energy Group,Energy,201-1000,US,Avery Stone,2025-08-21
+C1030,North Supply Co,Wholesale,1000+,US,Riley Chen,2026-04-29
+C1031,Signal Analytics Inc,Software,201-1000,US,Morgan Diaz,2025-08-14
+C1032,Summit Clinics Ltd,Healthcare,51-200,DE,Avery Stone,2025-01-02
+C1033,Granite Fitness Group,Consumer Services,11-50,CA,Morgan Diaz,2025-07-24
+C1034,Bright Supply Group,Wholesale,1-10,AU,Jordan Lee,2026-04-20
+C1035,Harbor Dental Inc,Healthcare,201-1000,DE,Jordan Lee,2025-06-04
+C1036,Kestrel Energy Ltd,Energy,51-200,US,Casey Patel,2026-05-01
+C1037,Pioneer Dental Inc,Healthcare,1-10,GB,Jordan Lee,2025-01-15
+C1038,  Vector Energy LLC,Energy,11-50,US,Casey Patel,2025-08-05
+C1039,Copper Supply Ltd,Wholesale,201-1000,DE,Jordan Lee,2025-11-30
+C1040,Blue Fitness Co,Consumer Services,1000+,CA,Casey Patel,2026-04-15
+C1041,Cedar Builders LLC,Construction,201-1000,DE,Jordan Lee,2026-06-21
+C1042,Kestrel Foods LLC,Food & Beverage,1000+,AU,Avery Stone,2025-06-26
+C1043,Pioneer Foods Co,Food & Beverage,201-1000,DE,Avery Stone,2026-06-15
+C1044,Pioneer Foods LLC,Food & Beverage,1-10,GB,Riley Chen,2025-07-15
+C1045,Pioneer Foods Inc,Food & Beverage,1000+,GB,Casey Patel,2026-03-30
+C1046,Summit Hospitality Co,Hospitality,201-1000,GB,Jordan Lee,2026-04-09
+C1047,Orbit Fitness Co,Consumer Services,11-50,DE,Riley Chen,2026-07-27
+C1048,Cedar Studios Inc,Media,1-10,AU,Jordan Lee,2026-02-06
+C1049,Vector Logistics LLC,Transportation,11-50,AU,Morgan Diaz,2025-11-07
+C1050,Cedar Outfitters LLC,Retail,1-10,CA,Riley Chen,2026-04-24
+C1051,Harbor Labs LLC,Software,1000+,CA,Morgan Diaz,2025-06-15
+C1052,  Vector Robotics Co,Manufacturing,51-200,US,Morgan Diaz,2025-11-23
+C1053,Pioneer Clinics Group,Healthcare,1000+,GB,Morgan Diaz,2025-01-19
+C1054,Orbit Logistics Inc,Transportation,1-10,US,Morgan Diaz,2025-08-23
+C1055,Lumen Foods LLC,Food & Beverage,201-1000,DE,Morgan Diaz,2025-10-04
+C1056,Tidal Dental Ltd,Healthcare,51-200,US,Morgan Diaz,2026-06-12
+C1057,Blue Supply LLC,Wholesale,51-200,US,Avery Stone,2026-03-12
+C1058,  Lumen Logistics Ltd,Transportation,1-10,CA,Avery Stone,2025-08-16
+C1059,Quarry Builders Group,Construction,1-10,GB,Jordan Lee,2025-10-02

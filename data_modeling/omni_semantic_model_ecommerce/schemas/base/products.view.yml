@@ -1,0 +1,79 @@
+schema: thelook_ecommerce
+table_name: products
+label: Products
+description: Product catalog. One row per SKU.
+
+dimensions:
+  id:
+    sql: '"id"'
+    type: number
+    primary_key: true
+    label: Product ID
+
+  name:
+    sql: '"name"'
+    type: string
+    label: Product Name
+
+  brand:
+    sql: '"brand"'
+    type: string
+
+  category:
+    sql: '"category"'
+    type: string
+
+  department:
+    sql: '"department"'
+    type: string
+    description: Men or Women.
+
+  sku:
+    sql: '"sku"'
+    type: string
+    label: SKU
+
+  distribution_center_id:
+    sql: '"distribution_center_id"'
+    type: number
+    hidden: true
+
+  cost:
+    sql: '"cost"'
+    type: number
+    format: usdcurrency
+    label: Unit Cost
+    required_access_grants: [finance_only]
+
+  retail_price:
+    sql: '"retail_price"'
+    type: number
+    format: usdcurrency
+    label: Retail Price
+
+  price_tier:
+    sql: |
+      CASE
+        WHEN ${products.retail_price} < 25 THEN '1. Under $25'
+        WHEN ${products.retail_price} < 75 THEN '2. $25 - $74'
+        WHEN ${products.retail_price} < 150 THEN '3. $75 - $149'
+        ELSE '4. $150+'
+      END
+    type: string
+    label: Price Tier
+
+measures:
+  count:
+    aggregate_type: count
+    label: Product Count
+
+  brand_count:
+    sql: ${products.brand}
+    aggregate_type: count_distinct
+    label: Brand Count
+
+  average_retail_price:
+    sql: ${products.retail_price}
+    aggregate_type: average
+    format: usdcurrency
+    label: Avg Retail Price

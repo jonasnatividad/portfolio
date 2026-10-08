@@ -1,0 +1,182 @@
+deal_id,company_id,deal_name,plan,stage,amount_usd,owner,created_date,expected_close_date,last_updated_at
+D5000,C1007,Willow Analytics Co - Enterprise,Enterprise,PROSPECTING,100900,Casey Patel,2026-05-19,2026-06-27,2026-09-30T18:19:00Z
+D5001,C1033,Granite Fitness Group - Growth,Growth, proposal ,"$17,800.00",Morgan Diaz,2026-06-02,2026-09-10,2026-09-30T12:22:00Z
+D5002,C1051,Harbor Labs LLC - Starter,Starter,Prospecting,7100,Morgan Diaz,2026-05-13,2026-05-29,2026-09-30T16:12:00Z
+D5003,C1032,Summit Clinics Ltd - Starter,Starter,Discovery,8300,Avery Stone,2026-08-21,2026-12-17,2026-10-01T12:22:00Z
+D5004,C1031,Signal Analytics Inc - Growth,Growth, closed lost ,34500,Morgan Diaz,2026-07-25,2026-09-16,2026-09-30T11:14:00Z
+D5005,C1021,Bright Robotics Group - Starter,Starter,Proposal,"$3,400.00",Avery Stone,2026-03-17,2026-05-14,2026-09-30T10:00:00Z
+D5006,C1004,Cedar Builders Inc - Growth,Growth, proposal ,14800,Casey Patel,2026-05-15,2026-06-05,2026-09-30T18:53:00Z
+D5007,C1024,Signal Clinics Inc - Growth,Growth,Negotiation,21600,Riley Chen,2026-05-29,2026-09-08,2026-09-30T08:29:00Z
+D5008,C1011,Kestrel Clinics Ltd - Starter,Starter, prospecting ,5700,Riley Chen,2026-08-21,2026-10-20,2026-09-30T16:20:00Z
+D5009,C1015,Bright Dental Group - Starter,Starter, discovery ,3000,Riley Chen,2026-06-12,2026-07-19,2026-09-30T13:24:00Z
+D5010,C1005,Atlas Labs LLC - Starter,Starter,Closed Won,"$7,100.00",Avery Stone,2026-09-19,2026-11-03,2026-09-30T08:05:00Z
+D5011,C1016,Pioneer Outfitters Group - Growth,Growth,Proposal,24900,Jordan Lee,2026-03-19,2026-04-07,2026-09-30T08:19:00Z
+D5012,C1019,Atlas Analytics LLC - Growth,Growth, negotiation ,40000,Casey Patel,2026-02-17,2026-05-09,2026-09-30T10:42:00Z
+D5013,C1057,Blue Supply LLC - Growth,Growth,Closed Won,28200,Avery Stone,2026-07-23,2026-11-06,2026-09-30T10:18:00Z
+D5014,C1046,Summit Hospitality Co - Growth,Growth,Prospecting,35400,Jordan Lee,2026-03-20,2026-07-18,2026-09-30T16:40:00Z
+D5015,C1027,Maple Labs Inc - Growth,Growth,Prospecting,36700,Jordan Lee,2026-09-20,2026-12-10,2026-09-30T16:36:00Z
+D5016,C1053,Pioneer Clinics Group - Growth,Growth,Closed Lost,38100,Morgan Diaz,2026-01-13,2026-04-11,2026-09-30T18:44:00Z
+D5017,C1041,Cedar Builders LLC - Starter,Starter,Discovery,6000,Jordan Lee,2026-01-20,2026-04-25,2026-10-01T13:50:00Z
+D5018,C1053,Pioneer Clinics Group - Starter,Starter,Closed Won,7400,Morgan Diaz,2026-01-30,2026-05-04,2026-09-30T18:15:00Z
+D5019,C1031,Signal Analytics Inc - Starter,Starter,Closed Won,7100,Morgan Diaz,2026-08-26,2026-12-13,2026-09-30T16:05:00Z
+D5020,C1042,Kestrel Foods LLC - Growth,Growth,Discovery,39700,Avery Stone,2026-09-04,2026-09-27,2026-09-30T12:15:00Z
+D5021,C1046,Summit Hospitality Co - Growth,Growth,Closed Won,"$28,200.00",Jordan Lee,2026-05-03,2026-07-14,2026-09-30T14:04:00Z
+D5022,C1030,North Supply Co - Enterprise,Enterprise,Closed Won,142900,Riley Chen,2026-06-01,2026-09-01,2026-09-30T18:12:00Z
+D5023,C1004,Cedar Builders Inc - Growth,Growth,Discovery,34700,Casey Patel,2026-06-23,2026-10-10,2026-09-30T12:39:00Z
+D5024,C1036,Kestrel Energy Ltd - Starter,Starter,Prospecting,8500,Casey Patel,2026-09-08,2026-10-26,2026-09-30T09:44:00Z
+D5025,C1013,Signal Foods Group - Growth,Growth,Closed Won,27200,Avery Stone,2026-06-02,2026-07-22,2026-09-30T15:29:00Z
+D5026,C1049,Vector Logistics LLC - Starter,Starter,DISCOVERY,6900,Morgan Diaz,2026-04-17,2026-05-11,2026-09-30T08:18:00Z
+D5027,C1029,Copper Energy Group - Starter,Starter,Closed Lost,"$5,200.00",Avery Stone,2026-09-21,2026-12-01,2026-09-30T14:13:00Z
+D5028,C1058,Lumen Logistics Ltd - Enterprise,Enterprise, prospecting ,78600,Avery Stone,2026-04-22,2026-05-17,2026-09-30T16:16:00Z
+D5029,C1023,Bright Energy LLC - Starter,Starter,Discovery,8800,Casey Patel,2026-09-22,2026-10-20,2026-09-30T13:14:00Z
+D5030,C1031,Signal Analytics Inc - Growth,Growth,Negotiation,12100,Morgan Diaz,2026-09-10,2026-10-14,2026-10-01T17:06:00Z
+D5031,C1028,Pioneer Builders Ltd - Starter,Starter,Proposal,5600,Jordan Lee,2026-03-18,2026-05-19,2026-09-30T09:53:00Z
+D5032,C1021,Bright Robotics Group - Starter,Starter,CLOSED LOST,4600,Avery Stone,2026-06-27,2026-07-26,2026-09-30T08:57:00Z
+D5033,C1047,Orbit Fitness Co - Starter,Starter,Prospecting,7800,Riley Chen,2026-07-14,2026-09-15,2026-09-30T09:23:00Z
+D5034,C1059,Quarry Builders Group - Starter,Starter,Closed Lost,3800,Jordan Lee,2026-05-25,2026-07-13,2026-09-30T08:53:00Z
+D5035,C1042,Kestrel Foods LLC - Starter,Starter,Discovery,6600,Avery Stone,2026-03-22,2026-05-09,2026-09-30T16:20:00Z
+D5036,C1012,Bright Foods Co - Growth,Growth,Closed Lost,37000,Riley Chen,2026-08-12,2026-12-07,2026-09-30T18:25:00Z
+D5037,C1058,Lumen Logistics Ltd - Growth,Growth,Closed Won,36000,Avery Stone,2026-04-19,2026-05-09,2026-09-30T14:28:00Z
+D5038,C1039,Copper Supply Ltd - Growth,Growth,Proposal,16200,Jordan Lee,2026-05-31,2026-08-23,2026-09-30T10:30:00Z
+D5039,C1026,Orbit Foods LLC - Starter,Starter,Discovery,"$8,300.00",Casey Patel,2026-06-06,2026-09-22,2026-09-30T12:25:00Z
+D5040,C1041,Cedar Builders LLC - Starter,Starter,Negotiation,4000,Jordan Lee,2026-09-09,2026-11-12,2026-09-30T10:41:00Z
+D5041,C1010,Blue Labs Inc - Starter,Starter,Closed Lost,7500,Morgan Diaz,2026-09-18,2026-12-04,2026-09-30T11:28:00Z
+D5042,C1058,Lumen Logistics Ltd - Starter,Starter,Proposal,4600,Avery Stone,2026-08-23,2026-11-15,2026-09-30T11:05:00Z
+D5043,C1011,Kestrel Clinics Ltd - Starter,Starter, discovery ,"$5,100.00",Riley Chen,2026-02-20,2026-04-22,2026-09-30T17:12:00Z
+D5044,C1056,Tidal Dental Ltd - Starter,Starter, proposal ,7300,Morgan Diaz,2026-08-04,2026-11-21,2026-09-30T11:24:00Z
+D5045,C1017,Bright Dental LLC - Starter,Starter,Proposal,6000,Casey Patel,2026-02-05,2026-05-03,2026-09-30T10:43:00Z
+D5046,C1032,Summit Clinics Ltd - Growth,Growth,Prospecting,"$24,600.00",Avery Stone,2026-04-25,2026-06-09,2026-09-30T14:41:00Z
+D5047,C1028,Pioneer Builders Ltd - Starter,Starter,Closed Lost,4000,Jordan Lee,2026-06-13,2026-06-29,2026-09-30T08:27:00Z
+D5048,C1045,Pioneer Foods Inc - Growth,Growth,Closed Lost,12000,Casey Patel,2026-09-04,2026-11-19,2026-09-30T09:25:00Z
+D5049,C1059,Quarry Builders Group - Enterprise,Enterprise,Closed Lost,162600,Jordan Lee,2026-09-01,2026-10-16,2026-09-30T09:14:00Z
+D5050,C1009,Granite Builders Group - Starter,Starter,Closed Lost,8700,Riley Chen,2026-03-01,2026-06-15,2026-09-30T18:54:00Z
+D5051,C1048,Cedar Studios Inc - Growth,Growth,Closed Won,12000,Jordan Lee,2026-02-17,2026-03-08,2026-10-01T16:50:00Z
+D5052,C1036,Kestrel Energy Ltd - Enterprise,Enterprise,Closed Lost,93000,Casey Patel,2026-06-09,2026-09-11,2026-09-30T16:40:00Z
+D5053,C1027,Maple Labs Inc - Growth,Growth,Prospecting,29200,Jordan Lee,2026-03-03,2026-04-24,2026-09-30T17:12:00Z
+D5054,C1024,Signal Clinics Inc - Starter,Starter,Prospecting,6800,Riley Chen,2026-01-05,2026-02-26,2026-09-30T12:20:00Z
+D5055,C1041,Cedar Builders LLC - Growth,Growth,Proposal,"$29,900.00",Jordan Lee,2026-05-09,2026-06-22,2026-09-30T11:01:00Z
+D5056,C1026,Orbit Foods LLC - Growth,Growth,Prospecting,28300,Casey Patel,2026-06-11,2026-07-19,2026-09-30T18:41:00Z
+D5057,C1026,Orbit Foods LLC - Starter,Starter,Closed Won,4900,Casey Patel,2026-05-01,2026-07-01,2026-09-30T15:02:00Z
+D5058,C1044,Pioneer Foods LLC - Starter,Starter,Negotiation,4600,Riley Chen,2026-08-08,2026-10-11,2026-10-01T18:56:00Z
+D5059,C1018,Harbor Outfitters Co - Growth,Growth,Closed Lost,18600,Casey Patel,2026-09-20,2026-12-06,2026-10-01T14:14:00Z
+D5060,C1052,Vector Robotics Co - Starter,Starter,Discovery,,Morgan Diaz,2026-08-31,2026-12-20,2026-09-30T09:39:00Z
+D5061,C1031,Signal Analytics Inc - Growth,Growth,PROPOSAL,13800,Morgan Diaz,2026-04-29,2026-08-06,2026-09-30T17:09:00Z
+D5062,C1059,Quarry Builders Group - Starter,Starter,Prospecting,"$4,200.00",Jordan Lee,2026-04-24,2026-07-23,2026-09-30T14:03:00Z
+D5063,C1045,Pioneer Foods Inc - Starter,Starter,Proposal,5600,Casey Patel,2026-07-25,2026-11-07,2026-09-30T09:05:00Z
+D5064,C1059,Quarry Builders Group - Starter,Starter,Discovery,"$6,800.00",Jordan Lee,2026-04-12,2026-07-02,2026-09-30T08:19:00Z
+D5065,C1042,Kestrel Foods LLC - Growth,Growth,Closed Lost,17500,Avery Stone,2026-07-15,2026-09-23,2026-09-30T09:00:00Z
+D5066,C1005,Atlas Labs LLC - Starter,Starter,Proposal,,Avery Stone,2026-07-03,2026-08-01,2026-09-30T11:24:00Z
+D5067,C1022,North Freight LLC - Growth,Growth,Closed Won,14900,Avery Stone,2026-06-12,2026-08-20,2026-09-30T08:45:00Z
+D5068,C1030,North Supply Co - Starter,Starter,Discovery,6900,Riley Chen,2026-08-21,2026-10-20,2026-09-30T08:40:00Z
+D5069,C1026,Orbit Foods LLC - Starter,Starter,Prospecting,6800,Casey Patel,2026-07-31,2026-08-18,2026-09-30T09:51:00Z
+D5070,C1058,Lumen Logistics Ltd - Starter,Starter,Closed Won,5800,Avery Stone,2026-04-14,2026-07-14,2026-09-30T13:17:00Z
+D5071,C1021,Bright Robotics Group - Enterprise,Enterprise,Discovery,150400,Avery Stone,2026-01-27,2026-05-12,2026-09-30T13:59:00Z
+D5072,C1017,Bright Dental LLC - Starter,Starter,Prospecting,3900,Casey Patel,2026-02-07,2026-03-22,2026-09-30T15:45:00Z
+D5073,C1029,Copper Energy Group - Enterprise,Enterprise,Closed Won,166800,Avery Stone,2026-07-21,2026-09-28,2026-09-30T15:08:00Z
+D5074,C1059,Quarry Builders Group - Starter,Starter, closed won ,5500,Jordan Lee,2026-01-09,2026-04-27,2026-09-30T10:38:00Z
+D5075,C1015,Bright Dental Group - Starter,Starter,PROPOSAL,7900,Riley Chen,2026-06-17,2026-10-09,2026-09-30T09:32:00Z
+D5076,C1012,Bright Foods Co - Starter,Starter,Discovery,8300,Riley Chen,2026-03-27,2026-04-18,2026-09-30T08:30:00Z
+D5077,C1035,Harbor Dental Inc - Growth,Growth,Closed Lost,14400,Jordan Lee,2026-03-28,2026-04-24,2026-09-30T12:39:00Z
+D5078,C1005,Atlas Labs LLC - Starter,Starter,Proposal,6700,Avery Stone,2026-08-08,2026-11-20,2026-09-30T10:14:00Z
+D5079,C1008,Maple Builders Group - Starter,Starter,Closed Won,8400,Avery Stone,2026-05-05,2026-08-26,2026-09-30T09:49:00Z
+D5080,C1053,Pioneer Clinics Group - Starter,Starter,Negotiation,5100,Morgan Diaz,2026-05-28,2026-07-28,2026-09-30T12:12:00Z
+D5081,C1028,Pioneer Builders Ltd - Starter,Starter,Discovery,7700,Jordan Lee,2026-05-10,2026-06-29,2026-09-30T11:20:00Z
+D5082,C1004,Cedar Builders Inc - Starter,Starter,Negotiation,8300,Casey Patel,2026-05-10,2026-06-22,2026-09-30T09:41:00Z
+D5083,C1029,Copper Energy Group - Enterprise,Enterprise,Prospecting,90300,Avery Stone,2026-02-26,2026-06-24,2026-09-30T15:58:00Z
+D5084,C1023,Bright Energy LLC - Starter,Starter,Discovery,4600,Casey Patel,2026-06-04,2026-06-24,2026-09-30T17:52:00Z
+D5085,C1037,Pioneer Dental Inc - Starter,Starter,Proposal,6700,Jordan Lee,2026-02-12,2026-03-20,2026-09-30T17:16:00Z
+D5086,C1049,Vector Logistics LLC - Growth,Growth,Prospecting,35300,Morgan Diaz,2026-01-08,2026-04-08,2026-09-30T17:22:00Z
+D5087,C1013,Signal Foods Group - Starter,Starter,Prospecting,"$5,100.00",Avery Stone,2026-06-28,2026-08-07,2026-09-30T08:38:00Z
+D5088,C1046,Summit Hospitality Co - Growth,Growth,Closed Won,22700,Jordan Lee,2026-04-19,2026-08-15,2026-09-30T14:43:00Z
+D5089,C1023,Bright Energy LLC - Starter,Starter,PROSPECTING,7100,Casey Patel,2026-06-13,2026-07-01,2026-09-30T16:30:00Z
+D5090,C1004,Cedar Builders Inc - Starter,Starter,Closed Won,8200,Casey Patel,2026-07-26,2026-08-28,2026-09-30T16:05:00Z
+D5091,C1041,Cedar Builders LLC - Starter,Starter,Closed Lost,8500,Jordan Lee,2026-05-23,2026-07-12,2026-10-01T13:51:00Z
+D5092,C1003,Atlas Studios Inc - Starter,Starter,Proposal,6000,Riley Chen,2026-07-06,2026-07-22,2026-09-30T18:12:00Z
+D5093,C1025,Maple Logistics LLC - Growth,Growth,Closed Lost,"$17,100.00",Jordan Lee,2026-04-19,2026-06-27,2026-09-30T14:07:00Z
+D5094,C1052,Vector Robotics Co - Starter,Starter,PROPOSAL,4100,Morgan Diaz,2026-07-10,2026-08-13,2026-09-30T08:03:00Z
+D5095,C1035,Harbor Dental Inc - Starter,Starter,Prospecting,6000,Jordan Lee,2026-07-27,2026-10-28,2026-09-30T16:10:00Z
+D5096,C1009,Granite Builders Group - Starter,Starter,Negotiation,3900,Riley Chen,2026-03-28,2026-04-19,2026-09-30T14:31:00Z
+D5097,C1048,Cedar Studios Inc - Growth,Growth,Proposal,27800,Jordan Lee,2026-04-16,2026-05-05,2026-10-01T18:08:00Z
+D5098,C1038,Vector Energy LLC - Enterprise,Enterprise,Prospecting,141300,Casey Patel,2026-07-22,2026-11-04,2026-09-30T10:40:00Z
+D5099,C1050,Cedar Outfitters LLC - Growth,Growth,Closed Won,39200,Riley Chen,2026-07-31,2026-09-08,2026-09-30T15:11:00Z
+D5100,C1036,Kestrel Energy Ltd - Starter,Starter,Closed Lost,6100,Casey Patel,2026-07-28,2026-08-31,2026-09-30T13:07:00Z
+D5101,C1009,Granite Builders Group - Starter,Starter,Prospecting,8500,Riley Chen,2026-04-13,2026-07-07,2026-09-30T08:42:00Z
+D5102,C1053,Pioneer Clinics Group - Starter,Starter,Negotiation,"$8,100.00",Morgan Diaz,2026-07-23,2026-10-15,2026-09-30T12:41:00Z
+D5103,C1026,Orbit Foods LLC - Starter,Starter,Proposal,6000,Casey Patel,2026-05-12,2026-08-18,2026-09-30T15:32:00Z
+D5104,C1028,Pioneer Builders Ltd - Starter,Starter,Closed Won,6800,Jordan Lee,2026-01-06,2026-03-23,2026-09-30T11:28:00Z
+D5105,C1048,Cedar Studios Inc - Growth,Growth,Closed Lost,27500,Jordan Lee,2026-08-27,2026-12-22,2026-09-30T14:06:00Z
+D5106,C1004,Cedar Builders Inc - Starter,Starter,Proposal,6600,Casey Patel,2026-08-13,2026-12-07,2026-09-30T16:32:00Z
+D5107,C1042,Kestrel Foods LLC - Starter,Starter,Prospecting,5600,Avery Stone,2026-03-12,2026-06-27,2026-09-30T16:05:00Z
+D5108,C1003,Atlas Studios Inc - Growth,Growth,Closed Won,16500,Riley Chen,2026-07-17,2026-11-08,2026-09-30T08:54:00Z
+D5109,C1004,Cedar Builders Inc - Enterprise,Enterprise,Discovery,,Casey Patel,2026-03-02,2026-05-17,2026-09-30T10:43:00Z
+D5110,C1050,Cedar Outfitters LLC - Growth,Growth,Prospecting,32000,Riley Chen,2026-04-28,2026-06-25,2026-09-30T12:10:00Z
+D5111,C1020,Tidal Studios Group - Growth,Growth,Closed Lost,16700,Jordan Lee,2026-05-25,2026-08-05,2026-09-30T12:32:00Z
+D5112,C1058,Lumen Logistics Ltd - Starter,Starter, closed won ,5600,Avery Stone,2026-05-19,2026-07-02,2026-09-30T13:02:00Z
+D5113,C1012,Bright Foods Co - Starter,Starter,Closed Won,8600,Riley Chen,2026-03-28,2026-05-16,2026-09-30T13:57:00Z
+D5114,C1024,Signal Clinics Inc - Starter,Starter,Prospecting,3400,Riley Chen,2026-05-20,2026-08-09,2026-09-30T18:54:00Z
+D5115,C1023,Bright Energy LLC - Enterprise,Enterprise,Negotiation,,Casey Patel,2026-08-24,2026-11-20,2026-09-30T09:16:00Z
+D5116,C1034,Bright Supply Group - Growth,Growth,Closed Won,20700,Jordan Lee,2026-07-25,2026-09-24,2026-09-30T14:23:00Z
+D5117,C1036,Kestrel Energy Ltd - Starter,Starter,Closed Won,4900,Casey Patel,2026-06-23,2026-09-01,2026-09-30T10:39:00Z
+D5118,C1047,Orbit Fitness Co - Enterprise,Enterprise, closed won ,100600,Riley Chen,2026-06-05,2026-07-21,2026-09-30T18:55:00Z
+D5119,C1037,Pioneer Dental Inc - Enterprise,Enterprise,Closed Won,64400,Jordan Lee,2026-06-14,2026-10-01,2026-09-30T11:09:00Z
+D5120,C1018,Harbor Outfitters Co - Growth,Growth,Proposal,13600,Casey Patel,2026-08-14,2026-10-13,2026-09-30T10:31:00Z
+D5121,C1014,Summit Supply Co - Growth,Growth,PROSPECTING,30600,Riley Chen,2026-01-28,2026-02-11,2026-09-30T13:19:00Z
+D5122,C1006,Kestrel Robotics Group - Growth,Growth,Proposal,31300,Casey Patel,2026-04-29,2026-06-20,2026-09-30T10:13:00Z
+D5123,C1023,Bright Energy LLC - Growth,Growth,Prospecting,"$38,300.00",Casey Patel,2026-09-05,2026-09-20,2026-09-30T11:45:00Z
+D5124,C1009,Granite Builders Group - Starter,Starter,Closed Won,5200,Riley Chen,2026-02-06,2026-05-16,2026-09-30T14:51:00Z
+D5125,C1016,Pioneer Outfitters Group - Enterprise,Enterprise,Closed Won,177000,Jordan Lee,2026-02-02,2026-04-28,2026-09-30T13:38:00Z
+D5126,C1041,Cedar Builders LLC - Growth,Growth, discovery ,13400,Jordan Lee,2026-09-14,2026-09-28,2026-09-30T08:34:00Z
+D5127,C1001,Atlas Foods Ltd - Starter,Starter,Prospecting,3900,Avery Stone,2026-05-06,2026-08-27,2026-09-30T08:39:00Z
+D5128,C1035,Harbor Dental Inc - Growth,Growth,Prospecting,29000,Jordan Lee,2026-04-15,2026-05-24,2026-09-30T17:41:00Z
+D5129,C1032,Summit Clinics Ltd - Growth,Growth,Closed Won,28700,Avery Stone,2026-08-05,2026-09-10,2026-09-30T12:04:00Z
+D5130,C1019,Atlas Analytics LLC - Growth,Growth,Closed Won,"$24,300.00",Casey Patel,2026-09-06,2026-09-20,2026-09-30T14:47:00Z
+D5131,C1058,Lumen Logistics Ltd - Starter,Starter, discovery ,5100,Avery Stone,2026-08-24,2026-09-20,2026-09-30T11:41:00Z
+D5132,C1002,Copper Logistics Ltd - Starter,Starter, closed won ,"$8,200.00",Jordan Lee,2026-05-19,2026-07-06,2026-09-30T16:43:00Z
+D5133,C1027,Maple Labs Inc - Growth,Growth, discovery ,14800,Jordan Lee,2026-05-20,2026-06-30,2026-09-30T16:00:00Z
+D5134,C1010,Blue Labs Inc - Starter,Starter,Closed Lost,4300,Morgan Diaz,2026-05-05,2026-06-13,2026-09-30T13:12:00Z
+D5135,C1056,Tidal Dental Ltd - Starter,Starter,Proposal,"$8,700.00",Morgan Diaz,2026-05-07,2026-08-09,2026-09-30T18:53:00Z
+D5136,C1034,Bright Supply Group - Starter,Starter,CLOSED LOST,8900,Jordan Lee,2026-01-08,2026-03-18,2026-09-30T11:36:00Z
+D5137,C1056,Tidal Dental Ltd - Starter,Starter,Proposal,3600,Morgan Diaz,2026-04-23,2026-07-20,2026-09-30T17:58:00Z
+D5138,C1010,Blue Labs Inc - Starter,Starter,Prospecting,,Morgan Diaz,2026-01-18,2026-04-21,2026-09-30T13:09:00Z
+D5139,C1044,Pioneer Foods LLC - Starter,Starter,Prospecting,"$8,200.00",Riley Chen,2026-01-26,2026-05-02,2026-09-30T08:44:00Z
+D5140,C1004,Cedar Builders Inc - Growth,Growth,Closed Lost,23900,Casey Patel,2026-02-07,2026-05-29,2026-09-30T11:52:00Z
+D5141,C1052,Vector Robotics Co - Growth,Growth,Closed Lost,35300,Morgan Diaz,2026-02-07,2026-05-28,2026-09-30T14:06:00Z
+D5142,C1015,Bright Dental Group - Starter,Starter,Prospecting,"$8,200.00",Riley Chen,2026-03-03,2026-06-28,2026-09-30T09:52:00Z
+D5143,C1048,Cedar Studios Inc - Growth,Growth,Proposal,15200,Jordan Lee,2026-06-01,2026-07-01,2026-09-30T18:13:00Z
+D5144,C1018,Harbor Outfitters Co - Starter,Starter,Discovery,5100,Casey Patel,2026-08-09,2026-10-06,2026-09-30T12:03:00Z
+D5145,C1045,Pioneer Foods Inc - Growth,Growth,Closed Won,28500,Casey Patel,2026-06-18,2026-09-17,2026-09-30T15:54:00Z
+D5146,C1018,Harbor Outfitters Co - Growth,Growth,CLOSED WON,26300,Casey Patel,2026-01-20,2026-02-06,2026-09-30T16:49:00Z
+D5147,C1006,Kestrel Robotics Group - Starter,Starter,Closed Won,8900,Casey Patel,2026-01-29,2026-03-11,2026-10-01T14:34:00Z
+D5148,C1052,Vector Robotics Co - Starter,Starter,Prospecting,5400,Morgan Diaz,2026-08-16,2026-09-24,2026-09-30T08:00:00Z
+D5149,C1022,North Freight LLC - Starter,Starter,Closed Won,4500,Avery Stone,2026-09-13,2027-01-10,2026-09-30T15:37:00Z
+D5150,C1022,North Freight LLC - Enterprise,Enterprise,Negotiation,97200,Avery Stone,2026-05-18,2026-06-21,2026-09-30T11:44:00Z
+D5151,C1014,Summit Supply Co - Starter,Starter,Closed Lost,3700,Riley Chen,2026-03-02,2026-06-22,2026-09-30T15:50:00Z
+D5152,C1044,Pioneer Foods LLC - Growth,Growth,Closed Won,15100,Riley Chen,2026-02-27,2026-04-27,2026-09-30T14:59:00Z
+D5153,C1025,Maple Logistics LLC - Growth,Growth,Closed Lost,12800,Jordan Lee,2026-02-18,2026-05-25,2026-10-01T15:38:00Z
+D5154,C1019,Atlas Analytics LLC - Starter,Starter,Prospecting,4900,Casey Patel,2026-09-18,2026-12-21,2026-09-30T15:08:00Z
+D5155,C1034,Bright Supply Group - Growth,Growth,Proposal,29100,Jordan Lee,2026-01-22,2026-03-18,2026-10-01T16:39:00Z
+D5156,C1053,Pioneer Clinics Group - Starter,Starter, prospecting ,8600,Morgan Diaz,2026-06-19,2026-08-28,2026-09-30T12:37:00Z
+D5157,C1014,Summit Supply Co - Starter,Starter, closed won ,4900,Riley Chen,2026-08-29,2026-12-10,2026-09-30T16:12:00Z
+D5158,C1017,Bright Dental LLC - Starter,Starter,Closed Won,8900,Casey Patel,2026-03-25,2026-05-09,2026-09-30T13:38:00Z
+D5159,C1033,Granite Fitness Group - Starter,Starter, proposal ,5100,Morgan Diaz,2026-05-05,2026-06-12,2026-10-01T17:56:00Z
+D5160,C1042,Kestrel Foods LLC - Starter,Starter,Prospecting,5500,Avery Stone,2026-07-20,2026-08-21,2026-09-30T12:27:00Z
+D5161,C1017,Bright Dental LLC - Starter,Starter,DISCOVERY,"$6,800.00",Casey Patel,2026-02-28,2026-05-02,2026-09-30T08:00:00Z
+D5162,C1025,Maple Logistics LLC - Growth,Growth,Closed Won,32700,Jordan Lee,2026-08-16,2026-11-02,2026-09-30T12:29:00Z
+D5163,C1001,Atlas Foods Ltd - Starter,Starter,Prospecting,6500,Avery Stone,2026-07-31,2026-09-14,2026-09-30T17:37:00Z
+D5164,C1047,Orbit Fitness Co - Growth,Growth,Closed Won,37400,Riley Chen,2026-05-02,2026-08-07,2026-09-30T18:44:00Z
+D5165,C1037,Pioneer Dental Inc - Growth,Growth,CLOSED WON,26200,Jordan Lee,2026-04-07,2026-06-18,2026-09-30T13:16:00Z
+D5166,C1040,Blue Fitness Co - Growth,Growth,Discovery,,Casey Patel,2026-08-07,2026-10-11,2026-09-30T18:10:00Z
+D5167,C1016,Pioneer Outfitters Group - Growth,Growth,Proposal,"$25,400.00",Jordan Lee,2026-09-09,2026-12-11,2026-09-30T16:43:00Z
+D5168,C1042,Kestrel Foods LLC - Enterprise,Enterprise,Closed Lost,162000,Avery Stone,2026-04-08,2026-06-02,2026-09-30T08:24:00Z
+D5169,C1053,Pioneer Clinics Group - Starter,Starter, closed lost ,4800,Morgan Diaz,2026-02-28,2026-05-22,2026-10-01T08:26:00Z
+D5170,C1050,Cedar Outfitters LLC - Enterprise,Enterprise,Negotiation,171000,Riley Chen,2026-04-17,2026-05-13,2026-09-30T17:29:00Z
+D5171,C1034,Bright Supply Group - Starter,Starter, negotiation ,6000,Jordan Lee,2026-09-05,2026-12-09,2026-09-30T16:21:00Z
+D5172,C1026,Orbit Foods LLC - Growth,Growth,Discovery,18000,Casey Patel,2026-08-26,2026-12-05,2026-09-30T14:32:00Z
+D5173,C1048,Cedar Studios Inc - Enterprise,Enterprise,Closed Won,96000,Jordan Lee,2026-07-06,2026-08-21,2026-09-30T14:25:00Z
+D5174,C1003,Atlas Studios Inc - Starter,Starter,Closed Lost,8700,Riley Chen,2026-08-07,2026-11-09,2026-09-30T18:22:00Z
+D5175,C1037,Pioneer Dental Inc - Starter,Starter,Discovery,7300,Jordan Lee,2026-04-29,2026-07-03,2026-09-30T11:51:00Z
+D5176,C1025,Maple Logistics LLC - Starter,Starter, prospecting ,3600,Jordan Lee,2026-03-30,2026-07-21,2026-09-30T18:12:00Z
+D5177,C1030,North Supply Co - Growth,Growth,Closed Won,23600,Riley Chen,2026-04-30,2026-06-01,2026-09-30T18:40:00Z
+D5178,C1053,Pioneer Clinics Group - Growth,Growth,Proposal,36900,Morgan Diaz,2026-08-04,2026-09-24,2026-09-30T16:41:00Z
+D5179,C1008,Maple Builders Group - Growth,Growth,Proposal,20800,Avery Stone,2026-09-02,2026-10-15,2026-09-30T14:43:00Z
+D5003,C1032,Summit Clinics Ltd - Starter,Starter,Discovery,8300,Avery Stone,2026-08-21,2026-12-17,2026-10-01T12:22:00Z

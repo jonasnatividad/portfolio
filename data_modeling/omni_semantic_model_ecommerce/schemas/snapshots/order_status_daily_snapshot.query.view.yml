@@ -1,0 +1,133 @@
+# Daily snapshot of order status: one row per order per day it existed,
+# showing the status the order had at the END of that day.
+#
+# The source table only stores the CURRENT status, but it also stores the
+# timestamp of each milestone (created, shipped, delivered, returned). That is
+# enough to rebuild the status on any past day, so the snapshot is derived with
+# a date spine instead of needing a nightly copy job.
+#
+# Rules for status on day D (end of day, UTC):
+#   returned_at  <= D  -> Returned
+#   delivered_at <= D  -> Complete
+#   shipped_at   <= D  -> Shipped
+#   created_at   <= D  -> Processing, or Cancelled if the order is Cancelled
+#                         (cancellations have no timestamp, so they are shown as
+#                         Cancelled from the order date)
+#
+# Rows stop 30 days after an order reaches a final state, which keeps the
+# table small while still showing late transitions.
+#
+# Persisting it: if you need the snapshot to be immutable (for example because
+# the source can be corrected after the fact), schedule this same SELECT as a
+# BigQuery scheduled query that appends only snapshot_date = CURRENT_DATE() - 1
+# to a partitioned table, and point table_name at that table instead of sql.
+label: Order Status Snapshot
+description: Status of each order at the end of each day. Use for backlog and aging trends.
+
+sql: |
+  WITH days AS (
+    SELECT snapshot_date
+    FROM UNNEST(
+      GENERATE_DATE_ARRAY(DATE_SUB(CURRENT_DATE(), INTERVAL 365 DAY), DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+    ) AS snapshot_date
+  ),
+  orders AS (
+    SELECT
+      order_id,
+      user_id,
+      status AS current_status,
+      DATE(created_at) AS created_date,
+      DATE(shipped_at) AS shipped_date,
+      DATE(delivered_at) AS delivered_date,
+      DATE(returned_at) AS returned_date,
+      COALESCE(DATE(returned_at), DATE(delivered_at),
+               IF(status = 'Cancelled', DATE(created_at), NULL)) AS final_date
+    FROM `bigquery-public-data.thelook_ecommerce.orders`
+  )
+  SELECT
+    d.snapshot_date,
+    o.order_id,
+    o.user_id,
+    CASE
+      WHEN o.returned_date <= d.snapshot_date THEN 'Returned'
+      WHEN o.delivered_date <= d.snapshot_date THEN 'Complete'
+      WHEN o.current_status = 'Cancelled' THEN 'Cancelled'
+      WHEN o.shipped_date <= d.snapshot_date THEN 'Shipped'
+      ELSE 'Processing'
+    END AS status_on_date,
+    DATE_DIFF(d.snapshot_date, o.created_date, DAY) AS order_age_days
+  FROM days AS d
+  JOIN orders AS o
+    ON o.created_date <= d.snapshot_date
+   AND (o.final_date IS NULL OR d.snapshot_date <= DATE_ADD(o.final_date, INTERVAL 30 DAY))
+
+dimensions:
+  snapshot_key:
+    sql: CONCAT(CAST(${order_status_daily_snapshot.snapshot_date} AS STRING), '-', CAST(${order_status_daily_snapshot.order_id} AS STRING))
+    type: string
+    primary_key: true
+    hidden: true
+
+  snapshot_date:
+    sql: '"snapshot_date"'
+    type: date
+    label: Snapshot
+    timeframes: [date, week, month]
+
+  order_id:
+    sql: '"order_id"'
+    type: number
+    hidden: true
+
+  user_id:
+    sql: '"user_id"'
+    type: number
+    hidden: true
+
+  status_on_date:
+    sql: '"status_on_date"'
+    type: string
+    label: Status on Date
+
+  is_open_on_date:
+    sql: ${order_status_daily_snapshot.status_on_date} IN ('Processing', 'Shipped')
+    type: yesno
+    label: Open on Date
+
+  order_age_days:
+    sql: '"order_age_days"'
+    type: number
+    label: Order Age (Days)
+
+  order_age_bucket:
+    sql: |
+      CASE
+        WHEN ${order_status_daily_snapshot.order_age_days} <= 2 THEN '0-2 days'
+        WHEN ${order_status_daily_snapshot.order_age_days} <= 7 THEN '3-7 days'
+        WHEN ${order_status_daily_snapshot.order_age_days} <= 14 THEN '8-14 days'
+        ELSE '15+ days'
+      END
+    type: string
+    label: Order Age Bucket
+
+measures:
+  order_count:
+    aggregate_type: count
+    label: Orders
+    description: Orders in the selected status on the selected day. Do not sum across days; pick one day or average.
+
+  open_order_count:
+    aggregate_type: count
+    label: Open Orders (Backlog)
+    filters:
+      is_open_on_date:
+        is: true
+
+  stuck_in_processing_count:
+    aggregate_type: count
+    label: Processing > 7 Days
+    filters:
+      status_on_date:
+        is: Processing
+      order_age_days:
+        greater_than: 7

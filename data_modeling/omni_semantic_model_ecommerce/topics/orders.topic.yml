@@ -1,0 +1,35 @@
+base_view: order_items
+label: Orders & Revenue
+description: |
+  Sales at the item level with order, customer, product and fulfillment context.
+  Start here for revenue, margin, basket size and return questions.
+
+joins:
+  orders: {}
+  users: {}
+  products:
+    distribution_centers: {}
+  inventory_items: {}
+
+fields:
+  - order_items.*
+  - orders.*
+  - users.*
+  - products.*
+  - distribution_centers.name
+  - inventory_items.cost
+  - inventory_items.total_cost_of_sold
+  # Personal data is not needed for sales analysis.
+  - -users.email
+  - -users.first_name
+  - -users.last_name
+
+# Analysts can remove this, but dashboards open on the last 12 months.
+default_filters:
+  order_items.created_at:
+    time_for_duration: [12 months ago, 12 months]
+
+ai_context: |
+  "Revenue" means order_items.net_revenue unless the user says gross.
+  An order is one row in orders; an item is one row in order_items.
+  Returned and cancelled items are excluded from net revenue.

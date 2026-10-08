@@ -1,0 +1,55 @@
+# Detached date view: one row per calendar day, independent of any fact table.
+# Use it to (1) show days with zero activity, (2) drive the daily snapshot, and
+# (3) give every topic a shared "calendar" with consistent fiscal attributes.
+label: Calendar
+description: One row per day from the first order date through today. Has no foreign keys; it joins to facts on a date.
+
+sql: |
+  SELECT calendar_date
+  FROM UNNEST(
+    GENERATE_DATE_ARRAY(
+      (SELECT DATE(MIN(created_at)) FROM `bigquery-public-data.thelook_ecommerce.orders`),
+      CURRENT_DATE(),
+      INTERVAL 1 DAY
+    )
+  ) AS calendar_date
+
+dimensions:
+  calendar_date:
+    sql: '"calendar_date"'
+    type: date
+    primary_key: true
+    label: Date
+    timeframes: [date, week, month, quarter, year]
+
+  day_of_week:
+    sql: FORMAT_DATE('%A', ${date_spine.calendar_date})
+    type: string
+    label: Day of Week
+
+  day_of_week_index:
+    sql: EXTRACT(DAYOFWEEK FROM ${date_spine.calendar_date})
+    type: number
+    hidden: true
+
+  is_weekend:
+    sql: EXTRACT(DAYOFWEEK FROM ${date_spine.calendar_date}) IN (1, 7)
+    type: yesno
+    label: Is Weekend
+
+  is_month_to_date:
+    sql: |
+      EXTRACT(DAY FROM ${date_spine.calendar_date}) <= EXTRACT(DAY FROM CURRENT_DATE())
+    type: yesno
+    label: Is Month-to-Date
+    description: True for days on or before today's day-of-month in any month. Use for like-for-like MTD comparisons.
+
+  days_ago:
+    sql: DATE_DIFF(CURRENT_DATE(), ${date_spine.calendar_date}, DAY)
+    type: number
+    label: Days Ago
+
+measures:
+  day_count:
+    aggregate_type: count
+    label: Days

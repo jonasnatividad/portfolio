@@ -1,0 +1,112 @@
+schema: thelook_ecommerce
+table_name: orders
+label: Orders
+description: One row per customer order (header level). Line-level detail lives in order_items.
+
+dimensions:
+  order_id:
+    sql: '"order_id"'
+    type: number
+    primary_key: true
+    label: Order ID
+    description: Unique order identifier.
+
+  user_id:
+    sql: '"user_id"'
+    type: number
+    hidden: true
+    description: Customer who placed the order. Join key to users.
+
+  status:
+    sql: '"status"'
+    type: string
+    label: Order Status
+    description: Current status. One of Processing, Shipped, Complete, Cancelled, Returned.
+
+  is_open:
+    sql: ${orders.status} IN ('Processing', 'Shipped')
+    type: yesno
+    label: Is Open
+    description: Order has not reached a final state yet.
+
+  gender:
+    sql: '"gender"'
+    type: string
+    description: Customer gender recorded on the order.
+
+  num_of_item:
+    sql: '"num_of_item"'
+    type: number
+    label: Items in Order
+    description: Number of line items on the order.
+
+  created_at:
+    sql: '"created_at"'
+    type: timestamp
+    label: Ordered
+    timeframes: [raw, date, week, month, quarter, year]
+    description: When the order was placed (UTC).
+
+  shipped_at:
+    sql: '"shipped_at"'
+    type: timestamp
+    label: Shipped
+    timeframes: [raw, date, week, month]
+    description: When the order left the distribution center. Null until shipped.
+
+  delivered_at:
+    sql: '"delivered_at"'
+    type: timestamp
+    label: Delivered
+    timeframes: [raw, date, week, month]
+    description: When the carrier confirmed delivery. Null until delivered.
+
+  returned_at:
+    sql: '"returned_at"'
+    type: timestamp
+    label: Returned
+    timeframes: [raw, date, week, month]
+    description: When the return was received. Null unless returned.
+
+  days_to_deliver:
+    sql: TIMESTAMP_DIFF(${orders.delivered_at[raw]}, ${orders.created_at[raw]}, DAY)
+    type: number
+    label: Days to Deliver
+    description: Whole days from order placed to delivered.
+
+measures:
+  count:
+    aggregate_type: count
+    label: Order Count
+    description: Number of orders.
+
+  completed_order_count:
+    aggregate_type: count
+    label: Completed Orders
+    filters:
+      status:
+        is: Complete
+
+  returned_order_count:
+    aggregate_type: count
+    label: Returned Orders
+    filters:
+      status:
+        is: Returned
+
+  return_rate:
+    sql: SAFE_DIVIDE(${orders.returned_order_count}, ${orders.count})
+    label: Return Rate
+    format: percent_1
+    description: Returned orders divided by all orders.
+
+  average_days_to_deliver:
+    sql: ${orders.days_to_deliver}
+    aggregate_type: average
+    format: number_1
+    label: Avg Days to Deliver
+
+  customer_count:
+    sql: ${orders.user_id}
+    aggregate_type: count_distinct
+    label: Ordering Customers

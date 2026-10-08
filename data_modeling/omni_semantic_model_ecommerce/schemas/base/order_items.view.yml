@@ -1,0 +1,117 @@
+schema: thelook_ecommerce
+table_name: order_items
+label: Order Items
+description: One row per item sold. The finest sales grain in the model and the base of the orders topic.
+
+dimensions:
+  id:
+    sql: '"id"'
+    type: number
+    primary_key: true
+    label: Order Item ID
+
+  order_id:
+    sql: '"order_id"'
+    type: number
+    hidden: true
+
+  user_id:
+    sql: '"user_id"'
+    type: number
+    hidden: true
+
+  product_id:
+    sql: '"product_id"'
+    type: number
+    hidden: true
+
+  inventory_item_id:
+    sql: '"inventory_item_id"'
+    type: number
+    hidden: true
+
+  status:
+    sql: '"status"'
+    type: string
+    label: Item Status
+    description: Status of this line. Lines in one order can differ (for example a partial return).
+
+  sale_price:
+    sql: '"sale_price"'
+    type: number
+    format: usdcurrency
+    label: Sale Price
+    description: Price the customer paid for this item.
+
+  created_at:
+    sql: '"created_at"'
+    type: timestamp
+    label: Sold
+    timeframes: [raw, date, week, month, quarter, year]
+
+  shipped_at:
+    sql: '"shipped_at"'
+    type: timestamp
+    timeframes: [raw, date]
+
+  delivered_at:
+    sql: '"delivered_at"'
+    type: timestamp
+    timeframes: [raw, date]
+
+  returned_at:
+    sql: '"returned_at"'
+    type: timestamp
+    timeframes: [raw, date]
+
+  is_revenue_status:
+    sql: ${order_items.status} NOT IN ('Cancelled', 'Returned')
+    type: yesno
+    label: Counts Toward Revenue
+    description: Excludes cancelled and returned lines.
+
+measures:
+  count:
+    aggregate_type: count
+    label: Items Sold
+
+  gross_revenue:
+    sql: ${order_items.sale_price}
+    aggregate_type: sum
+    format: usdcurrency
+    label: Gross Revenue
+    description: Sum of sale price across all lines, any status.
+
+  net_revenue:
+    sql: ${order_items.sale_price}
+    aggregate_type: sum
+    format: usdcurrency
+    label: Net Revenue
+    description: Sale price excluding cancelled and returned lines.
+    filters:
+      is_revenue_status:
+        is: true
+
+  average_sale_price:
+    sql: ${order_items.sale_price}
+    aggregate_type: average
+    format: usdcurrency
+    label: Avg Sale Price
+
+  gross_margin:
+    sql: ${order_items.net_revenue} - ${inventory_items.total_cost_of_sold}
+    format: usdcurrency
+    label: Gross Margin
+    description: Net revenue minus the cost of the inventory units sold. Requires the inventory_items join.
+    required_access_grants: [finance_only]
+
+  gross_margin_pct:
+    sql: SAFE_DIVIDE(${order_items.gross_margin}, ${order_items.net_revenue})
+    format: percent_1
+    label: Gross Margin %
+    required_access_grants: [finance_only]
+
+  revenue_per_order:
+    sql: SAFE_DIVIDE(${order_items.net_revenue}, ${orders.count})
+    format: usdcurrency
+    label: Revenue per Order

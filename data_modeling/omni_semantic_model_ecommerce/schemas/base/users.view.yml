@@ -1,0 +1,102 @@
+schema: thelook_ecommerce
+table_name: users
+label: Customers
+description: One row per registered customer. Personal fields are hidden by default.
+
+dimensions:
+  id:
+    sql: '"id"'
+    type: number
+    primary_key: true
+    label: Customer ID
+
+  first_name:
+    sql: '"first_name"'
+    type: string
+    hidden: true
+
+  last_name:
+    sql: '"last_name"'
+    type: string
+    hidden: true
+
+  email:
+    sql: '"email"'
+    type: string
+    hidden: true
+    description: Hidden from browsing; exposed only in the campaign topic for export.
+
+  age:
+    sql: '"age"'
+    type: number
+
+  age_band:
+    sql: |
+      CASE
+        WHEN ${users.age} < 25 THEN '18-24'
+        WHEN ${users.age} < 35 THEN '25-34'
+        WHEN ${users.age} < 50 THEN '35-49'
+        WHEN ${users.age} < 65 THEN '50-64'
+        ELSE '65+'
+      END
+    type: string
+    label: Age Band
+
+  gender:
+    sql: '"gender"'
+    type: string
+
+  city:
+    sql: '"city"'
+    type: string
+
+  state:
+    sql: '"state"'
+    type: string
+
+  country:
+    sql: '"country"'
+    type: string
+
+  postal_code:
+    sql: '"postal_code"'
+    type: string
+    hidden: true
+
+  latitude:
+    sql: '"latitude"'
+    type: number
+    hidden: true
+
+  longitude:
+    sql: '"longitude"'
+    type: number
+    hidden: true
+
+  traffic_source:
+    sql: '"traffic_source"'
+    type: string
+    label: Acquisition Source
+    description: Channel the customer first arrived from (Search, Organic, Facebook, Email, Display).
+
+  created_at:
+    sql: '"created_at"'
+    type: timestamp
+    label: Signed Up
+    timeframes: [raw, date, week, month, quarter, year]
+
+  tenure_days:
+    sql: DATE_DIFF(CURRENT_DATE(), DATE(${users.created_at[raw]}), DAY)
+    type: number
+    label: Tenure (Days)
+
+measures:
+  count:
+    aggregate_type: count
+    label: Customer Count
+
+  average_age:
+    sql: ${users.age}
+    aggregate_type: average
+    format: number_1
+    label: Avg Age

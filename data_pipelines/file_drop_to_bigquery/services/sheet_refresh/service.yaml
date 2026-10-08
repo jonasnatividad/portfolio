@@ -1,0 +1,26 @@
+# Deploy: gcloud run services replace service.yaml --region us-central1 --project your-gcp-project
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: sales-sheet-refresh
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "1"
+    spec:
+      serviceAccountName: sheet-refresh@your-gcp-project.iam.gserviceaccount.com
+      containerConcurrency: 1
+      timeoutSeconds: 600
+      containers:
+        - image: us-central1-docker.pkg.dev/your-gcp-project/pipelines/sales-sheet-refresh:latest
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          env:
+            - name: GCP_PROJECT
+              value: your-gcp-project
+            - name: SHEET_ID
+              value: your-google-sheet-id

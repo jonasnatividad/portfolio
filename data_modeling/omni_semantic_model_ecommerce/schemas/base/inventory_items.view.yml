@@ -1,0 +1,117 @@
+schema: thelook_ecommerce
+table_name: inventory_items
+label: Inventory Items
+description: One row per physical unit received into a distribution center. sold_at is null while the unit is in stock.
+
+dimensions:
+  id:
+    sql: '"id"'
+    type: number
+    primary_key: true
+    label: Inventory Item ID
+
+  product_id:
+    sql: '"product_id"'
+    type: number
+    hidden: true
+
+  product_distribution_center_id:
+    sql: '"product_distribution_center_id"'
+    type: number
+    hidden: true
+
+  cost:
+    sql: '"cost"'
+    type: number
+    format: usdcurrency
+    label: Unit Cost
+    required_access_grants: [finance_only]
+
+  created_at:
+    sql: '"created_at"'
+    type: timestamp
+    label: Received
+    timeframes: [raw, date, week, month]
+
+  sold_at:
+    sql: '"sold_at"'
+    type: timestamp
+    label: Sold
+    timeframes: [raw, date, week, month]
+
+  is_in_stock:
+    sql: ${inventory_items.sold_at[raw]} IS NULL
+    type: yesno
+    label: In Stock
+
+  days_in_inventory:
+    sql: |
+      TIMESTAMP_DIFF(
+        COALESCE(${inventory_items.sold_at[raw]}, CURRENT_TIMESTAMP()),
+        ${inventory_items.created_at[raw]},
+        DAY
+      )
+    type: number
+    label: Days in Inventory
+    description: Days from receipt to sale, or to today for units still in stock.
+
+  age_bucket:
+    sql: |
+      CASE
+        WHEN ${inventory_items.days_in_inventory} <= 30 THEN '0-30 days'
+        WHEN ${inventory_items.days_in_inventory} <= 90 THEN '31-90 days'
+        WHEN ${inventory_items.days_in_inventory} <= 180 THEN '91-180 days'
+        ELSE '180+ days'
+      END
+    type: string
+    label: Inventory Age Bucket
+
+measures:
+  count:
+    aggregate_type: count
+    label: Units
+
+  units_in_stock:
+    aggregate_type: count
+    label: Units in Stock
+    filters:
+      is_in_stock:
+        is: true
+
+  units_sold:
+    aggregate_type: count
+    label: Units Sold
+    filters:
+      is_in_stock:
+        is: false
+
+  sell_through_rate:
+    sql: SAFE_DIVIDE(${inventory_items.units_sold}, ${inventory_items.count})
+    format: percent_1
+    label: Sell-Through Rate
+
+  stock_value_at_cost:
+    sql: ${inventory_items.cost}
+    aggregate_type: sum
+    format: usdcurrency
+    label: Stock Value at Cost
+    required_access_grants: [finance_only]
+    filters:
+      is_in_stock:
+        is: true
+
+  total_cost_of_sold:
+    sql: ${inventory_items.cost}
+    aggregate_type: sum
+    format: usdcurrency
+    label: Cost of Goods Sold
+    required_access_grants: [finance_only]
+    filters:
+      is_in_stock:
+        is: false
+
+  average_days_in_inventory:
+    sql: ${inventory_items.days_in_inventory}
+    aggregate_type: average
+    format: number_1
+    label: Avg Days in Inventory

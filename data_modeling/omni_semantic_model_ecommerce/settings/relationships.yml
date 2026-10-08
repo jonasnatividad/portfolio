@@ -1,0 +1,78 @@
+# Global relationships (joins) between views.
+# Every join is declared once here and reused by any topic that needs it.
+# Direction: always from the finer grain (many) to the coarser grain (one).
+
+# --- Order line grain -------------------------------------------------------
+- join_from_view: order_items
+  join_to_view: orders
+  join_type: always_left
+  on_sql: ${order_items.order_id} = ${orders.order_id}
+  relationship_type: many_to_one
+
+- join_from_view: order_items
+  join_to_view: users
+  join_type: always_left
+  on_sql: ${order_items.user_id} = ${users.id}
+  relationship_type: many_to_one
+
+- join_from_view: order_items
+  join_to_view: products
+  join_type: always_left
+  on_sql: ${order_items.product_id} = ${products.id}
+  relationship_type: many_to_one
+
+- join_from_view: order_items
+  join_to_view: inventory_items
+  join_type: always_left
+  on_sql: ${order_items.inventory_item_id} = ${inventory_items.id}
+  relationship_type: one_to_one
+
+# --- Order grain ------------------------------------------------------------
+- join_from_view: orders
+  join_to_view: users
+  join_type: always_left
+  on_sql: ${orders.user_id} = ${users.id}
+  relationship_type: many_to_one
+  # Lets the customers topic start from users and still reach orders
+  # without fanning out user-level measures.
+  reversible: true
+
+# --- Inventory / catalog ----------------------------------------------------
+- join_from_view: inventory_items
+  join_to_view: products
+  join_type: always_left
+  on_sql: ${inventory_items.product_id} = ${products.id}
+  relationship_type: many_to_one
+
+- join_from_view: products
+  join_to_view: distribution_centers
+  join_type: always_left
+  on_sql: ${products.distribution_center_id} = ${distribution_centers.id}
+  relationship_type: many_to_one
+
+# --- Web events -------------------------------------------------------------
+- join_from_view: events
+  join_to_view: users
+  join_type: always_left
+  on_sql: ${events.user_id} = ${users.id}
+  relationship_type: many_to_one
+  reversible: true
+
+# --- Reporting views --------------------------------------------------------
+- join_from_view: users
+  join_to_view: orders_eligible_for_repeat_campaign
+  join_type: always_left
+  on_sql: ${users.id} = ${orders_eligible_for_repeat_campaign.user_id}
+  relationship_type: one_to_one
+
+- join_from_view: order_status_daily_snapshot
+  join_to_view: orders
+  join_type: always_left
+  on_sql: ${order_status_daily_snapshot.order_id} = ${orders.order_id}
+  relationship_type: many_to_one
+
+- join_from_view: order_status_daily_snapshot
+  join_to_view: date_spine
+  join_type: always_left
+  on_sql: ${order_status_daily_snapshot.snapshot_date} = ${date_spine.calendar_date}
+  relationship_type: many_to_one

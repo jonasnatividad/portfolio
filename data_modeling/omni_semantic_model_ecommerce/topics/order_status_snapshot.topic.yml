@@ -1,0 +1,24 @@
+base_view: order_status_daily_snapshot
+label: Order Status Over Time
+description: |
+  End-of-day status for every order, rebuilt from milestone timestamps.
+  Use for backlog trends ("how many orders were open each day?") and
+  fulfillment aging. Never sum order counts across multiple days.
+
+joins:
+  date_spine: {}
+  orders:
+    users: {}
+
+fields:
+  - order_status_daily_snapshot.*
+  - date_spine.day_of_week
+  - date_spine.is_weekend
+  - orders.status
+  - orders.num_of_item
+  - users.country
+  - users.traffic_source
+
+default_filters:
+  order_status_daily_snapshot.snapshot_date:
+    time_for_duration: [90 days ago, 90 days]
